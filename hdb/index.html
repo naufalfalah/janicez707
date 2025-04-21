@@ -125,10 +125,10 @@
                     <p class="section-subtitle">Complete the questionnaire now for immediate results and exclusive access to the latest <span class="Text-Lines">2025 new launch units</span> from our partnering developers.</p>
 
                     <div class="buttons">
-                        <button class="btn btn-prev" onclick="prevStep()">
+                        <button type="button" class="btn btn-prev" onclick="prevStep()">
                             <i class="fas fa-arrow-left"></i> Back
                         </button>
-                        <button class="btn btn-next" onclick="nextStep()">
+                        <button type="button" class="btn btn-next" onclick="nextStep()">
                             Continue <i class="fas fa-arrow-right"></i>
                         </button>
                     </div>
@@ -166,10 +166,10 @@
                     </div>
 
                     <div class="buttons">
-                        <button class="btn btn-prev" onclick="prevStep()">
+                        <button type="button" class="btn btn-prev" onclick="prevStep()">
                             <i class="fas fa-arrow-left"></i> Back
                         </button>
-                        <button class="btn btn-next" onclick="nextStep()">
+                        <button type="button" class="btn btn-next" onclick="nextStep()">
                             Continue <i class="fas fa-arrow-right"></i>
                         </button>
                     </div>
@@ -181,43 +181,46 @@
                         <h1 class="section-title">Contact Information</h1>
                         <p class="section-subtitle">Enter your details to receive a detailed renovation report</p>
                     </div>
-                        <div class="form-group">
-                            <label class="form-label">Full Name</label>
-                            <input type="text" class="form-input" placeholder="Enter your full name">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Email Address</label>
-                            <input type="email" class="form-input" placeholder="Enter your email address">
-                        </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" class="form-input" name="name" placeholder="Enter your full name">
+                        <p class="error-message" id="name-error"></p>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Email Address</label>
+                        <input type="email" class="form-input" name="email" placeholder="Enter your email address">
+                        <p class="error-message" id="email-error"></p>
+                    </div>
 
                     <div class="form-group">
                         <label class="form-label">Contact Number</label>
                         <div class="phone-input">
-                            <select class="form-select phone-code">
-                                <option value="+65">+65 (SG)</option>
-                                <option value="+60">+60 (MY)</option>
-                                <option value="+1">+1 (US)</option>
-                                <option value="+44">+44 (UK)</option>
+                            <select class="form-select phone-code" name="country_code">
+                                <option value="+65">🇸🇬 +65 (SG)</option>
                             </select>
-                            <input type="tel" class="form-input" placeholder="Enter your phone number">
+                            <input type="tel" class="form-input" name="phone_number" placeholder="Enter your phone number" maxlength="8">
                         </div>
+                        <p class="error-message" id="phone-error"></p>
                     </div>
 
                     <div class="checkbox-wrapper last-contact">
-                        <input type="checkbox" id="terms" class="checkbox-input" checked>
+                        <input type="checkbox" name="terms" id="terms" class="checkbox-input" checked>
                         <label for="terms" class="checkbox-label">
                             <span class="checkbox-custom"></span>
                             <span> I consent to the collection, use, and disclosure of my personal data for purposes as set out in our Privacy Policy. (View Policy)</span>
                         </label>
+                        <p class="error-message" id="terms-error"></p>
                     </div>
 
                     
 
                     <div class="buttons">
-                        <button class="btn btn-prev" onclick="prevStep()">
+                        <button type="button" class="btn btn-prev" onclick="prevStep()">
                             <i class="fas fa-arrow-left"></i> Back
                         </button>
-                        <button class="btn btn-next" onclick="nextStep()">
+                        <button type="button" class="btn btn-next" onclick="nextStep()">
                             Continue <i class="fas fa-arrow-right"></i>
                         </button>
                     </div>
@@ -242,10 +245,10 @@
                         <p>Our team will reach out with a shortlist of Interior Designers shortly.</p>
 
                         <div class="result-actions">
-                            <button class="action-btn primary">
+                            <button type="button" class="action-btn primary">
                                 <i class="fas fa-download"></i> Download Result
                             </button>
-                            <button class="action-btn secondary" onclick="goToStep(1)">
+                            <button type="button" class="action-btn secondary" onclick="goToStep(1)">
                                 <i class="fas fa-redo"></i> Start Over
                             </button>
                         </div>
@@ -259,84 +262,7 @@
         // Variables
         let currentStep = 1;
         const totalSteps = 4;
-        
-        // Elements
-        const progressFill = document.getElementById('progress-fill');
-        const progressPercentage = document.getElementById('progress-percentage');
-        const stepItems = document.querySelectorAll('.step-item');
-        const formSections = document.querySelectorAll('.form-section');
-        
-        // Update progress
-        function updateProgress() {
-            const percent = ((currentStep - 1) / (totalSteps - 1)) * 100;
-            progressFill.style.width = `${percent}%`;
-            progressPercentage.textContent = `${Math.round(percent)}%`;
-            
-            // Update step items
-            stepItems.forEach((item, index) => {
-                const step = index + 1;
-                item.classList.remove('active', 'completed');
-                
-                if (step === currentStep) {
-                    item.classList.add('active');
-                } else if (step < currentStep) {
-                    item.classList.add('completed');
-                }
-            });
-            
-            // Show current section
-            formSections.forEach((section, index) => {
-                section.classList.remove('active');
-                if (index + 1 === currentStep) {
-                    section.classList.add('active');
-                }
-            });
-        }
-        
-        // Next step
-        function nextStep() {
-            if (currentStep < totalSteps) {
-                currentStep++;
-                updateProgress();
-            }
-        }
-        
-        // Previous step
-        function prevStep() {
-            if (currentStep > 1) {
-                currentStep--;
-                updateProgress();
-            }
-        }
-        
-        // Go to specific step
-        function goToStep(step) {
-            if (step >= 1 && step <= totalSteps) {
-                currentStep = step;
-                updateProgress();
-            }
-        }
-        
-        // Select card
-        function selectCard(card, group) {
-            // Deselect all cards in same group
-            const cards = document.querySelectorAll(`.option-card[onclick*="${group}"]`);
-            cards.forEach(c => c.classList.remove('selected'));
-            
-            // Select clicked card
-            card.classList.add('selected');
-        }
-        
-        // Clear radio buttons
-        function clearRadios(name) {
-            const radios = document.querySelectorAll(`input[name="${name}"]`);
-            radios.forEach(radio => {
-                radio.checked = false;
-            });
-        }
-        
-        // Initialize
-        updateProgress();
     </script>
+    <script src="../js/form.js"></script>
 </body>
 </html>

@@ -1,4 +1,3 @@
-
 :root {
     --primary: #2aa1ad;
     --primary-light: #1633916b;
@@ -16,6 +15,7 @@
     --radius: 12px;
     --heading: linear-gradient(90deg, #fff 0%, var(--text) 80%);
 }
+
 * {
     margin: 0;
     padding: 0;
@@ -505,7 +505,7 @@ body {
 }
 
 .phone-code {
-    width: 20%;
+    width: 30%;
     flex-shrink: 0;
 }
 

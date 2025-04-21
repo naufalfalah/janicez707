@@ -117,7 +117,7 @@
     
                         <div class="buttons">
                             <div></div> <!-- Empty div for spacing -->
-                            <button class="btn btn-next" data-step="1">
+                            <button type="button" class="btn btn-next" data-step="1">
                                 Continue <i class="fas fa-arrow-right"></i>
                             </button>
                         </div>
@@ -134,28 +134,32 @@
                             <div class="form-group">
                                 <div class="form-group">
                                     <label class="form-label">Project Name </label>
-                                    <div class="phone-input">
+                                    <div class="project-input">
                                         <select class="form-select ">
                                             <option value="+65">TURQUOISE</option>
                                         </select>
                                     </div>
                                 </div>
                             </div>
+                            <p class="error-message" id="project-error"></p>
                         </div>
     
                         <div class="form-group">
                             <label class="form-label">BLK </label>
                             <input type="text" class="form-input" placeholder="Enter BLK">
+                            <p class="error-message" id="block-error"></p>
                         </div>
     
                         <div class="form-group">
                             <label class="form-label">What is your unit number?  </label>
                             <input type="text" class="form-input" placeholder="Enter your unit number">
+                            <p class="error-message" id="unit-error"></p>
                         </div>
     
                         <div class="form-group">
                             <label class="form-label">What is your floor number?  </label>
                             <input type="text" class="form-input" placeholder="Enter your floor number">
+                            <p class="error-message" id="floor-error"></p>
                         </div>
     
                         <div class="alert disclaimer-main-wrapper" style="background-color: var(--card);">
@@ -167,10 +171,10 @@
                         </div>
     
                         <div class="buttons">
-                            <button class="btn btn-prev" onclick="prevStep()">
+                            <button type="button" class="btn btn-prev" onclick="prevStep()">
                                 <i class="fas fa-arrow-left"></i> Back
                             </button>
-                            <button class="btn btn-next" data-step="2">
+                            <button type="button" class="btn btn-next" data-step="2">
                                 Continue <i class="fas fa-arrow-right"></i>
                             </button>
                         </div>
@@ -182,14 +186,16 @@
                             <h1 class="section-title">Contact Information</h1>
                             <p class="section-subtitle">Enter your details to receive a detailed renovation report</p>
                         </div>
+                        
                         <div class="form-group">
                             <label class="form-label">Full Name</label>
-                            <input type="text" class="form-input" placeholder="Enter your full name">
+                            <input type="text" class="form-input" name="name" placeholder="Enter your full name">
                             <p class="error-message" id="name-error"></p>
                         </div>
+
                         <div class="form-group">
                             <label class="form-label">Email Address</label>
-                            <input type="email" class="form-input" placeholder="Enter your email address">
+                            <input type="email" class="form-input" name="email" placeholder="Enter your email address">
                             <p class="error-message" id="email-error"></p>
                         </div>
     
@@ -205,21 +211,22 @@
                         </div>
     
                         <div class="checkbox-wrapper last-contact">
-                            <input type="checkbox" id="terms" class="checkbox-input" checked>
+                            <input type="checkbox" name="terms" id="terms" class="checkbox-input" checked>
                             <label for="terms" class="checkbox-label">
                                 <span class="checkbox-custom"></span>
                                 <span>I consent to the collection, use, and disclosure of my personal data for purposes as set out in our Privacy Policy. (View Policy)</span>
                             </label>
+                            <p class="error-message" id="terms-error"></p>
                         </div>
     
                         <!-- error message -->
                         <p class="error-message" id=""></p>
     
                         <div class="buttons">
-                            <button class="btn btn-prev" onclick="prevStep()">
+                            <button type="button" class="btn btn-prev" onclick="prevStep()">
                                 <i class="fas fa-arrow-left"></i> Back
                             </button>
-                            <button class="btn btn-next" data-step="3">
+                            <button type="submit" class="btn btn-next" data-step="3">
                                 Continue <i class="fas fa-arrow-right"></i>
                             </button>
                         </div>
@@ -244,10 +251,10 @@
                             <p>Our team will reach out with a shortlist of Interior Designers shortly.</p>
     
                             <div class="result-actions">
-                                <button class="action-btn primary">
+                                <button type="button" class="action-btn primary">
                                     <i class="fas fa-download"></i> Download Result
                                 </button>
-                                <button class="action-btn secondary" onclick="goToStep(1)">
+                                <button type="button" class="action-btn secondary" onclick="goToStep(1)">
                                     <i class="fas fa-redo"></i> Start Over
                                 </button>
                             </div>
@@ -260,12 +267,16 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
+        // Variables
+        let currentStep = 1;
+        const totalSteps = 4;
         let sell = "";
 
         $(document).ready(function() {
             $('.btn-next').on('click', function() {
                 const step = $(this).data('step');
-                let isValid = true;
+                console.log('step', step);
+                let isValid = true
                 
                 if (step === 1) {
                     if (!sell) {
@@ -329,10 +340,6 @@
             //     })
             //     .catch(error => console.error("Error loading towns:", error));
 
-            // Step 5
-            $('input[name="phone_number"]').on('input', function() {
-                this.value = this.value.replace(/[^0-9]/g, '');
-            });
 
             // how to run ajax when click submit button
             $('#submit-form').on('submit', function(event) {
@@ -375,7 +382,6 @@
             });
         });
 
-
         // Select card
         function selectCard(card, group, value) {
             // Deselect all cards in same group
@@ -386,7 +392,6 @@
             card.classList.add('selected');
 
             sell = value;
-            console.log("value", value);
         }
     </script>
     <script src="../js/form.js"></script>

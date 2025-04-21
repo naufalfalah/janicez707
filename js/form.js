@@ -1,7 +1,13 @@
-
-// Variables
-let currentStep = 1;
-const totalSteps = 4;
+$(document).ready(function() {
+    // Step 5
+    $('input[name="name"], input[name="phone_number"], input[name="email"]').on('input', function() {
+        formValidation();
+    });
+    
+    $('input[name="phone_number"]').on('input', function() {
+        this.value = this.value.replace(/[^0-9]/g, '');
+    });
+});
 
 // Elements
 const progressFill = document.getElementById('progress-fill');
@@ -84,11 +90,14 @@ function formValidation() {
 
     // Validate email
     const email = $('input[name="email"]').val();
+    console.log('email', email)
     if (!email) {
+        console.log("here")
         $('#email-error').text('Please enter your email address.');
         invalidFields = true;
     }
     if (email && !validateEmail(email)) {
+        console.log("here 2")
         $('#email-error').text('Please enter a valid email address.');
         invalidFields = true;
     }
@@ -104,17 +113,26 @@ function formValidation() {
         invalidFields = true;
     }
 
+    // Validate checkbox
+    const isChecked = $('input[name="terms"]').is(':checked');
+    if (!isChecked) {
+        $('#terms-error').text('You must agree to the terms and conditions.');
+        invalidFields = true;
+    }
+
     if (invalidFields) {
         return false;
     }
 
     return true;
 }
+
 function validateEmail(email) {
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return emailPattern.test(email);
 }
+
 function validatePhoneNumber(phoneNumber) {
     const phonePattern = /^[89]\d{7}$/;
-    return phoneNumber.length
+    return phonePattern.test(phoneNumber);
 }
