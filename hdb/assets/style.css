@@ -706,3 +706,7 @@ body {
     background: var(--primary-light);
 }
 */
+
+.error-message {
+    color: red !important;
+}

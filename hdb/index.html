@@ -58,210 +58,316 @@
         <!-- Main Content -->
         <div class="main-content">
             <div class="container">
-
-                <!-- Step 1: More Details -->
-                <section class="form-section active" id="step-1">
-                    <div class="section-header">
-                        <h1 class="section-title">Property Information & Inquiry </h1>
-                        <p class="section-subtitle">Please provide the details of your property and intentions so we can generate an accurate, automated report based on URA data and past transactions.</p>
-                    </div>
-
-                    <div class="work-category">
-                        <div class="form-group">
+                <form action="#" method="POST" id="submit-form">
+                    <!-- Step 1: More Details -->
+                    <section class="form-section active" id="step-1">
+                        <div class="section-header">
+                            <h1 class="section-title">Property Information & Inquiry </h1>
+                            <p class="section-subtitle">Please provide the details of your property and intentions so we can generate an accurate, automated report based on URA data and past transactions.</p>
+                        </div>
+    
+                        <div class="work-category">
                             <div class="form-group">
-                                <label class="form-label">Where is your HDB located?  </label>
-                                <div class="phone-input">
-                                    <select class="form-select ">
-                                        <option value="+65">ANG MO KIO</option>
-                                        <option value="+60">BEDOK</option>
-                                        <option value="+1">BISHAN</option>
-                                        <option value="+44">BUKIT BATOK</option>
-                                    </select>
+                                <div class="form-group">
+                                    <label class="form-label">Where is your HDB located?  </label>
+                                    <div class="town-input">
+                                        <select name="town" class="form-select ">
+                                            <option value="">Select town</option>
+                                        </select>
+                                    </div>
+                                    <p class="error-message" id="town-error"></p>
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="work-category">
-                        <div class="form-group">
+    
+                        <div class="work-category">
                             <div class="form-group">
                                 <label class="form-label">HDB Flat Type? </label>
-                                <div class="phone-input">
-                                    <select class="form-select ">
-                                        <option value="+65" data-selectable="" data-value="2 ROOM">2 - Room</option>
-                                        <option value="+60" data-selectable="" data-value="3 ROOM">3 - Room</option>
-                                        <option value="+1" data-selectable="" data-value="4 ROOM">4 - Room</option>
-                                        <option value="+44" data-selectable="" data-value="EXECUTIVE">Executive/Multi-Generation</option>
+                                <div class="flat-type-input">
+                                    <select name="flat_type" class="form-select ">
+                                        <option value="">Select flat type</option>
+                                        <option value="2 ROOM">2 - Room</option>
+                                        <option value="3 ROOM">3 - Room</option>
+                                        <option value="4 ROOM">4 - Room</option>
+                                        <option value="EXECUTIVE" >Executive/Multi-Generation</option>
                                     </select>
                                 </div>
+                                <p class="error-message" id="flat-type-error"></p>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="work-category">
-                        <div class="form-group">
+    
+                        <div class="work-category">
                             <div class="form-group">
                                 <label class="form-label">Are you looking to sell your property? </label>
-                                <div class="phone-input">
-                                    <select class="form-select ">
-                                        <option value="+65">0-3 months</option>
-                                        <option value="+60">3-6 months</option>
-                                        <option value="+1">6-12 months</option>
-                                        <option value="+44">Exploring options</option>
+                                <div class="sell-input">
+                                    <select name="sell" class="form-select">
+                                        <option value="0-3 months">0-3 months</option>
+                                        <option value="3-6 months">3-6 months</option>
+                                        <option value="6-12 months">6-12 months</option>
+                                        <option value="Exploring options">Exploring options</option>
                                     </select>
                                 </div>
+                                <p class="error-message" id="sell-error"></p>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="alert disclaimer-main-wrapper" style="background-color: var(--card);">
-                        <div class="disclaimer-icon"><i class="fa-solid fa-circle-exclamation"></i></div>
-                        <div class="disclaimer-inner-wrapper">
-                            <label class="form-label">Important Note:</label>
-                            <p>Please fill up your details and you will be able to retrieve an automated LIVE report extracted base on URA data past transaction reports and a precise property valuation for your unit.</p>
+    
+                        <div class="alert disclaimer-main-wrapper" style="background-color: var(--card);">
+                            <div class="disclaimer-icon"><i class="fa-solid fa-circle-exclamation"></i></div>
+                            <div class="disclaimer-inner-wrapper">
+                                <label class="form-label">Important Note:</label>
+                                <p>Please fill up your details and you will be able to retrieve an automated LIVE report extracted base on URA data past transaction reports and a precise property valuation for your unit.</p>
+                            </div>
                         </div>
-                    </div>
-
-                    <p class="section-subtitle">Complete the questionnaire now for immediate results and exclusive access to the latest <span class="Text-Lines">2025 new launch units</span> from our partnering developers.</p>
-
-                    <div class="buttons">
-                        <button type="button" class="btn btn-prev" onclick="prevStep()">
-                            <i class="fas fa-arrow-left"></i> Back
-                        </button>
-                        <button type="button" class="btn btn-next" onclick="nextStep()">
-                            Continue <i class="fas fa-arrow-right"></i>
-                        </button>
-                    </div>
-                </section>
-
-
-                <!-- Step 2: Location Requirement -->
-                <section class="form-section" id="step-2">
-                    <div class="section-header">
-                        <h1 class="section-title">Address Information</h1>
-                        <p class="section-subtitle">Please provide the specific details of your property’s address to help us process your request accurately.</p>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">What is your Street Name </label>
-                        <input type="text" class="form-input" placeholder="Enter Your Street Name ">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Block No (BLK)? </label>
-                        <input type="text" class="form-input" placeholder="Enter No BLK ">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">What is your unit number?</label>
-                        <input type="text" class="form-input" placeholder="Enter unit number ">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">What is your floor number? </label>
-                        <input type="text" class="form-input" placeholder="Enter floor number ">
-                    </div>
-                    <div class="alert disclaimer-main-wrapper" style="background-color: var(--card);">
-                        <div class="disclaimer-icon"><i class="fa-solid fa-circle-exclamation"></i></div>
-                        <div class="disclaimer-inner-wrapper">
-                            <label class="form-label">Important Note:</label>
-                            <p>Please fill up your details and you will be able to retrieve an automated LIVE report extracted base on URA data past transaction reports and a precise property valuation for your unit.</p>
-                        </div>
-                    </div>
-
-                    <div class="buttons">
-                        <button type="button" class="btn btn-prev" onclick="prevStep()">
-                            <i class="fas fa-arrow-left"></i> Back
-                        </button>
-                        <button type="button" class="btn btn-next" onclick="nextStep()">
-                            Continue <i class="fas fa-arrow-right"></i>
-                        </button>
-                    </div>
-                </section>
-
-                <!-- Step 3: Age Requirement -->
-                <section class="form-section" id="step-3">
-                    <div class="section-header">
-                        <h1 class="section-title">Contact Information</h1>
-                        <p class="section-subtitle">Enter your details to receive a detailed renovation report</p>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">Full Name</label>
-                        <input type="text" class="form-input" name="name" placeholder="Enter your full name">
-                        <p class="error-message" id="name-error"></p>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">Email Address</label>
-                        <input type="email" class="form-input" name="email" placeholder="Enter your email address">
-                        <p class="error-message" id="email-error"></p>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">Contact Number</label>
-                        <div class="phone-input">
-                            <select class="form-select phone-code" name="country_code">
-                                <option value="+65">🇸🇬 +65 (SG)</option>
-                            </select>
-                            <input type="tel" class="form-input" name="phone_number" placeholder="Enter your phone number" maxlength="8">
-                        </div>
-                        <p class="error-message" id="phone-error"></p>
-                    </div>
-
-                    <div class="checkbox-wrapper last-contact">
-                        <input type="checkbox" name="terms" id="terms" class="checkbox-input" checked>
-                        <label for="terms" class="checkbox-label">
-                            <span class="checkbox-custom"></span>
-                            <span> I consent to the collection, use, and disclosure of my personal data for purposes as set out in our Privacy Policy. (View Policy)</span>
-                        </label>
-                        <p class="error-message" id="terms-error"></p>
-                    </div>
-
-                    
-
-                    <div class="buttons">
-                        <button type="button" class="btn btn-prev" onclick="prevStep()">
-                            <i class="fas fa-arrow-left"></i> Back
-                        </button>
-                        <button type="button" class="btn btn-next" onclick="nextStep()">
-                            Continue <i class="fas fa-arrow-right"></i>
-                        </button>
-                    </div>
-                </section>
-
-                <!-- Step 4: Results -->
-                <section class="form-section" id="step-4">
-                    <div class="section-header">
-                        <h1 class="section-title">Your Renovation Results</h1>
-                        <p class="section-subtitle">Here's your estimated renovation budget</p>
-                    </div>
-
-                    <div class="result-card">
-                        <div class="result-amount">$18,220 - $22,880</div>
-
-                        <p>This estimate covers all the renovation works you've selected.</p>
-
-                        <div class="alert">
-                            <p>A confirmation email with the PDF report has been sent to your@email.com</p>
-                        </div>
-
-                        <p>Our team will reach out with a shortlist of Interior Designers shortly.</p>
-
-                        <div class="result-actions">
-                            <button type="button" class="action-btn primary">
-                                <i class="fas fa-download"></i> Download Result
+    
+                        <p class="section-subtitle">Complete the questionnaire now for immediate results and exclusive access to the latest <span class="Text-Lines">2025 new launch units</span> from our partnering developers.</p>
+    
+                        <div class="buttons">
+                            <button type="button" class="btn btn-prev" onclick="prevStep()">
+                                <i class="fas fa-arrow-left"></i> Back
                             </button>
-                            <button type="button" class="action-btn secondary" onclick="goToStep(1)">
-                                <i class="fas fa-redo"></i> Start Over
+                            <button type="button" class="btn btn-next">
+                                Continue <i class="fas fa-arrow-right"></i>
                             </button>
                         </div>
-                    </div>
-                </section>
+                    </section>
+    
+                    <!-- Step 2: Location Requirement -->
+                    <section class="form-section" id="step-2">
+                        <div class="section-header">
+                            <h1 class="section-title">Address Information</h1>
+                            <p class="section-subtitle">Please provide the specific details of your property’s address to help us process your request accurately.</p>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">What is your Street Name </label>
+                            <div class="street-input">
+                                <select name="street" class="form-select ">
+                                    <option value="">Select street</option>
+                                </select>
+                            </div>
+                            <p class="error-message" id="street-error"></p>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Block No (BLK)? </label>
+                            <input type="text" name="block" class="form-input" placeholder="Enter No BLK">
+                            <p class="error-message" id="block-error"></p>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">What is your unit number?</label>
+                            <input type="text" name="unit" class="form-input" placeholder="Enter unit number">
+                            <p class="error-message" id="unit-error"></p>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">What is your floor number? </label>
+                            <input type="text" name="floor" class="form-input" placeholder="Enter floor number">
+                            <p class="error-message" id="floor-error"></p>
+                        </div>
+                        <div class="alert disclaimer-main-wrapper" style="background-color: var(--card);">
+                            <div class="disclaimer-icon"><i class="fa-solid fa-circle-exclamation"></i></div>
+                            <div class="disclaimer-inner-wrapper">
+                                <label class="form-label">Important Note:</label>
+                                <p>Please fill up your details and you will be able to retrieve an automated LIVE report extracted base on URA data past transaction reports and a precise property valuation for your unit.</p>
+                            </div>
+                        </div>
+    
+                        <div class="buttons">
+                            <button type="button" class="btn btn-prev" onclick="prevStep()">
+                                <i class="fas fa-arrow-left"></i> Back
+                            </button>
+                            <button type="button" class="btn btn-next">
+                                Continue <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </section>
+    
+                    <!-- Step 3: Age Requirement -->
+                    <section class="form-section" id="step-3">
+                        <div class="section-header">
+                            <h1 class="section-title">Contact Information</h1>
+                            <p class="section-subtitle">Enter your details to receive a detailed renovation report</p>
+                        </div>
+    
+                        <div class="form-group">
+                            <label class="form-label">Full Name</label>
+                            <input type="text" class="form-input" name="name" placeholder="Enter your full name">
+                            <p class="error-message" id="name-error"></p>
+                        </div>
+    
+                        <div class="form-group">
+                            <label class="form-label">Email Address</label>
+                            <input type="email" class="form-input" name="email" placeholder="Enter your email address">
+                            <p class="error-message" id="email-error"></p>
+                        </div>
+    
+                        <div class="form-group">
+                            <label class="form-label">Contact Number</label>
+                            <div class="phone-input">
+                                <select class="form-select phone-code" name="country_code">
+                                    <option value="+65">🇸🇬 +65 (SG)</option>
+                                </select>
+                                <input type="tel" class="form-input" name="phone_number" placeholder="Enter your phone number" maxlength="8">
+                            </div>
+                            <p class="error-message" id="phone-error"></p>
+                        </div>
+    
+                        <div class="checkbox-wrapper last-contact">
+                            <input type="checkbox" name="terms" id="terms" class="checkbox-input" checked>
+                            <label for="terms" class="checkbox-label">
+                                <span class="checkbox-custom"></span>
+                                <span> I consent to the collection, use, and disclosure of my personal data for purposes as set out in our Privacy Policy. (View Policy)</span>
+                            </label>
+                            <p class="error-message" id="terms-error"></p>
+                        </div>
+    
+                        <div class="buttons">
+                            <button type="button" class="btn btn-prev" onclick="prevStep()">
+                                <i class="fas fa-arrow-left"></i> Back
+                            </button>
+                            <button type="submit" class="btn btn-submit">
+                                Continue <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </section>
+    
+                    <!-- Step 4: Results -->
+                    <section class="form-section" id="step-4">
+                        <div class="section-header">
+                            <h1 class="section-title">Your Renovation Results</h1>
+                            <p class="section-subtitle">Here's your estimated renovation budget</p>
+                        </div>
+    
+                        <div class="result-card">
+                            <div class="result-amount">$18,220 - $22,880</div>
+    
+                            <p>This estimate covers all the renovation works you've selected.</p>
+    
+                            <div class="alert">
+                                <p>A confirmation email with the PDF report has been sent to your@email.com</p>
+                            </div>
+    
+                            <p>Our team will reach out with a shortlist of Interior Designers shortly.</p>
+    
+                            <div class="result-actions">
+                                <button type="button" class="action-btn primary">
+                                    <i class="fas fa-download"></i> Download Result
+                                </button>
+                                <button type="button" class="action-btn secondary" onclick="goToStep(1)">
+                                    <i class="fas fa-redo"></i> Start Over
+                                </button>
+                            </div>
+                        </div>
+                    </section>
+                </form>
             </div>
         </div>
     </div>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         // Variables
         let currentStep = 1;
         const totalSteps = 4;
+
+        $(document).ready(function() {
+            $('.btn-next').on('click', function() {
+                if (!validateStep()) {
+                    return;
+                }
+
+                nextStep();
+            });
+
+            $('select[name="town"], select[name="flat_type"], select[name="street"], input[name="block"], input[name="floor"], input[name="unit"]').on('change', function() {
+                validateStep();
+            })
+
+            fetch("../util_data.php?action=getTowns")
+                .then(response => response.json())
+                .then(data => {
+                    const townSelect = $('select[name="town"]');
+                    townSelect.empty();
+                    townSelect.append('<option value="">Select Town</option>');
+                    
+                    data.forEach(item => {
+                        townSelect.append(`<option value="${item.town}">${item.town}</option>`);
+                    });
+                })
+                .catch(error => console.error("Error loading towns:", error));
+
+            fetch("../util_data.php?action=getProjects")
+                .then(response => response.json())
+                .then(data => {
+                    const streetSelect = $('select[name="street"]');
+                    streetSelect.empty();
+                    streetSelect.append('<option value="">Select Street</option>');
+                    
+                    data.forEach(item => {
+                        streetSelect.append(`<option value="${item.street}">${item.street}</option>`);
+                    });
+                })
+                .catch(error => console.error("Error loading towns:", error));
+        });
+
+        function validateStep() {
+            console.log("currentStep", currentStep);
+            let isValid = true
+            $('.error-message').text('');
+
+            if (currentStep === 1) {
+                const town = $('select[name="town"]').val();
+                if (!town) {
+                    $('#town-error').text('Please select an option.');
+                    isValid = false;
+                }
+
+                const flatType = $('select[name="flat_type"]').val();
+                if (!flatType) {
+                    $('#flat-type-error').text('Please select an option.');
+                    isValid = false;
+                }
+
+                const sell = $('select[name="sell"]').val();
+                if (!sell) {
+                    $('#sell-error').text('Please select an option.');
+                    isValid = false;
+                }
+            }
+
+            if (currentStep === 2) {
+                const street = $('select[name="street"]').val();
+                if (!street) {
+                    $('#street-error').text('Please enter town');
+                    isValid = false;
+                }
+                
+                const block = $('input[name="block"]').val();
+                if (!block) {
+                    $('#block-error').text('Please enter block');
+                    isValid = false;
+                }
+
+                const floor = $('input[name="floor"]').val();
+                if (!floor) {
+                    $('#floor-error').text('Please enter floor');
+                    isValid = false;
+                }
+                if (floor && floor > 50) {
+                    $('#floor-error').text('Please enter a floor number less than 50');
+                    isValid = false;
+                }
+                
+                const unit = $('input[name="unit"]').val();
+                if (!unit) {
+                    $('#unit-error').text('Please enter unit');
+                    isValid = false;
+                }
+                if (unit && (unit.length < 2 || unit.length > 4)) {
+                    $('#unit-error').text('Please enter a number between 2 and 4 digits');
+                    isValid = false;
+                }
+            }
+            
+            return isValid;
+        }
     </script>
     <script src="../js/form.js"></script>
 </body>

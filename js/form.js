@@ -1,13 +1,108 @@
 $(document).ready(function() {
-    // Step 5
     $('input[name="name"], input[name="phone_number"], input[name="email"]').on('input', function() {
         formValidation();
     });
     
-    $('input[name="phone_number"]').on('input', function() {
+    $('input[name="block"], input[name="floor"], input[name="unit"], input[name="sqft"], input[name="phone_number"]').on('input', function() {
         this.value = this.value.replace(/[^0-9]/g, '');
     });
+
+    $('#submit-form').on('submit', function(event) {
+        console.log("test submit");
+        event.preventDefault();
+
+        // Validate form fields
+        if (!formValidation()) {
+            return;
+        }
+        
+        const formData = $(this).serialize();
+        
+        $('#loading-indicator').show();
+        $('.btn-submit').prop('disabled', true);
+
+        // $.ajax({
+        //     url: 'submit.php',
+        //     type: 'POST',
+        //     data: formData,
+        //     dataType: 'json',
+        //     success: function(response) {
+        //         console.log(response);
+
+        //         $('#loading-indicator').hide();
+        //         $('.btn-next').prop('disabled', false);
+                
+        //         $(`#${response.data.result}`).addClass('active');
+        //         $('.action-btn').attr("href", response.data.listing);
+        //         nextStep();
+        //     },
+        //     error: function(xhr, status, error) {
+        //         console.error('AJAX Error:', status, error);
+
+        //         $('#loading-indicator').hide();
+        //         $('.btn-next').prop('disabled', false);
+                
+        //         alert('Something went wrong. Please try again.');
+        //     }
+        // });
+        $('#loading-indicator').hide();
+        $('.btn-submit').prop('disabled', false);
+        nextStep();
+    });
 });
+
+function formValidation() {
+    let validFields = true;
+    $('.error-message').text('');
+
+    // Validate name
+    const name = $('input[name="name"]').val();
+    if (!name) {
+        $('#name-error').text('Please enter your name.');
+        validFields = false;
+    }
+
+    // Validate email
+    const email = $('input[name="email"]').val();
+    if (!email) {
+        $('#email-error').text('Please enter your email address.');
+        validFields = false;
+    }
+    if (email && !validateEmail(email)) {
+        $('#email-error').text('Please enter a valid email address.');
+        validFields = false;
+    }
+    
+    // Validate phone number
+    const phoneNumber = $('input[name="phone_number"]').val();
+    if (!phoneNumber) {
+        $('#phone-error').text('Please enter your phone number.');
+        validFields = false;
+    }
+    if (phoneNumber && !validatePhoneNumber(phoneNumber)) {
+        $('#phone-error').text('Please enter a valid phone number.');
+        validFields = false;
+    }
+
+    // Validate checkbox
+    const isChecked = $('input[name="terms"]').is(':checked');
+    if (!isChecked) {
+        $('#terms-error').text('You must agree to the terms and conditions.');
+        validFields = false;
+    }
+
+    return validFields;
+}
+
+function validateEmail(email) {
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailPattern.test(email);
+}
+
+function validatePhoneNumber(phoneNumber) {
+    const phonePattern = /^[89]\d{7}$/;
+    return phonePattern.test(phoneNumber);
+}
 
 // Elements
 const progressFill = document.getElementById('progress-fill');
@@ -44,10 +139,12 @@ function updateProgress() {
 
 // Next step
 function nextStep() {
+    console.log('test')
     if (currentStep < totalSteps) {
         currentStep++;
         updateProgress();
     }
+    console.log('currentStep', currentStep)
 }
 
 // Previous step
@@ -76,63 +173,3 @@ function clearRadios(name) {
 
 // Initialize
 updateProgress();
-
-function formValidation() {
-    let invalidFields = false;
-    $('.error-message').text('');
-
-    // Validate name
-    const name = $('input[name="name"]').val();
-    if (!name) {
-        $('#name-error').text('Please enter your name.');
-        invalidFields = true;
-    }
-
-    // Validate email
-    const email = $('input[name="email"]').val();
-    console.log('email', email)
-    if (!email) {
-        console.log("here")
-        $('#email-error').text('Please enter your email address.');
-        invalidFields = true;
-    }
-    if (email && !validateEmail(email)) {
-        console.log("here 2")
-        $('#email-error').text('Please enter a valid email address.');
-        invalidFields = true;
-    }
-    
-    // Validate phone number
-    const phoneNumber = $('input[name="phone_number"]').val();
-    if (!phoneNumber) {
-        $('#phone-error').text('Please enter your phone number.');
-        invalidFields = true;
-    }
-    if (phoneNumber && !validatePhoneNumber(phoneNumber)) {
-        $('#phone-error').text('Please enter a valid phone number.');
-        invalidFields = true;
-    }
-
-    // Validate checkbox
-    const isChecked = $('input[name="terms"]').is(':checked');
-    if (!isChecked) {
-        $('#terms-error').text('You must agree to the terms and conditions.');
-        invalidFields = true;
-    }
-
-    if (invalidFields) {
-        return false;
-    }
-
-    return true;
-}
-
-function validateEmail(email) {
-    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    return emailPattern.test(email);
-}
-
-function validatePhoneNumber(phoneNumber) {
-    const phonePattern = /^[89]\d{7}$/;
-    return phonePattern.test(phoneNumber);
-}
