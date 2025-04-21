@@ -59,6 +59,10 @@
         <div class="main-content">
             <div class="container">
                 <form action="#" method="POST" id="submit-form">
+                    <input type="hidden" name="form_type" value="hdb">
+                    <input type="hidden" name="source_url" value="https://launchgovtest.homes/">
+                    <input type="hidden" name="lead_id" id="lead_id" value="">
+
                     <!-- Step 1: More Details -->
                     <section class="form-section active" id="step-1">
                         <div class="section-header">
@@ -204,7 +208,7 @@
                                 <select class="form-select phone-code" name="country_code">
                                     <option value="+65">🇸🇬 +65 (SG)</option>
                                 </select>
-                                <input type="tel" class="form-input" name="phone_number" placeholder="Enter your phone number" maxlength="8">
+                                <input type="tel" class="form-input" name="ph_number" placeholder="Enter your phone number" maxlength="8">
                             </div>
                             <p class="error-message" id="phone-error"></p>
                         </div>
@@ -285,7 +289,7 @@
                 .then(data => {
                     const townSelect = $('select[name="town"]');
                     townSelect.empty();
-                    townSelect.append('<option value="">Select Town</option>');
+                    townSelect.append('<option value="">Select town</option>');
                     
                     data.forEach(item => {
                         townSelect.append(`<option value="${item.town}">${item.town}</option>`);
@@ -298,7 +302,7 @@
                 .then(data => {
                     const streetSelect = $('select[name="street"]');
                     streetSelect.empty();
-                    streetSelect.append('<option value="">Select Street</option>');
+                    streetSelect.append('<option value="">Select street</option>');
                     
                     data.forEach(item => {
                         streetSelect.append(`<option value="${item.street}">${item.street}</option>`);
@@ -308,7 +312,6 @@
         });
 
         function validateStep() {
-            console.log("currentStep", currentStep);
             let isValid = true
             $('.error-message').text('');
 

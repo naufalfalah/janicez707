@@ -1,14 +1,14 @@
 $(document).ready(function() {
-    $('input[name="name"], input[name="phone_number"], input[name="email"]').on('input', function() {
+    $('input[name="name"], input[name="ph_number"], input[name="email"]').on('input', function() {
         formValidation();
     });
     
-    $('input[name="block"], input[name="floor"], input[name="unit"], input[name="sqft"], input[name="phone_number"]').on('input', function() {
+    $('input[name="block"], input[name="floor"], input[name="unit"], input[name="sqft"], input[name="ph_number"]').on('input', function() {
         this.value = this.value.replace(/[^0-9]/g, '');
     });
 
     $('#submit-form').on('submit', function(event) {
-        console.log("test submit");
+        // console.log("submit");
         event.preventDefault();
 
         // Validate form fields
@@ -17,37 +17,33 @@ $(document).ready(function() {
         }
         
         const formData = $(this).serialize();
+        // console.log("formData", formData);
         
         $('#loading-indicator').show();
         $('.btn-submit').prop('disabled', true);
 
-        // $.ajax({
-        //     url: 'submit.php',
-        //     type: 'POST',
-        //     data: formData,
-        //     dataType: 'json',
-        //     success: function(response) {
-        //         console.log(response);
+        $.ajax({
+            url: '../submit.php',
+            type: 'POST',
+            data: formData,
+            dataType: 'json',
+            success: function(response) {
+                console.log('Success Response:', response);
 
-        //         $('#loading-indicator').hide();
-        //         $('.btn-next').prop('disabled', false);
+                $('#loading-indicator').hide();
+                $('.btn-submit').prop('disabled', false);
                 
-        //         $(`#${response.data.result}`).addClass('active');
-        //         $('.action-btn').attr("href", response.data.listing);
-        //         nextStep();
-        //     },
-        //     error: function(xhr, status, error) {
-        //         console.error('AJAX Error:', status, error);
+                nextStep();
+            },
+            error: function(xhr, status, error) {
+                console.error('AJAX Error:', status, error);
 
-        //         $('#loading-indicator').hide();
-        //         $('.btn-next').prop('disabled', false);
+                $('#loading-indicator').hide();
+                $('.btn-submit').prop('disabled', false);
                 
-        //         alert('Something went wrong. Please try again.');
-        //     }
-        // });
-        $('#loading-indicator').hide();
-        $('.btn-submit').prop('disabled', false);
-        nextStep();
+                alert('Something went wrong. Please try again.');
+            }
+        });
     });
 });
 
@@ -74,7 +70,7 @@ function formValidation() {
     }
     
     // Validate phone number
-    const phoneNumber = $('input[name="phone_number"]').val();
+    const phoneNumber = $('input[name="ph_number"]').val();
     if (!phoneNumber) {
         $('#phone-error').text('Please enter your phone number.');
         validFields = false;
@@ -139,12 +135,10 @@ function updateProgress() {
 
 // Next step
 function nextStep() {
-    console.log('test')
     if (currentStep < totalSteps) {
         currentStep++;
         updateProgress();
     }
-    console.log('currentStep', currentStep)
 }
 
 // Previous step
