@@ -299,6 +299,11 @@ $unit = $response['lead_details'][4]['lead_form_value'];
                                 </div>
                             </div>
                         </div>
+                        <div class="result-actions">
+                            <button type="button" class="action-btn secondary" onclick="goToStep(1)">
+                                <i class="fas fa-redo"></i> Start Over
+                            </button>
+                        </div>
                     </section>
                 </form>
             </div>

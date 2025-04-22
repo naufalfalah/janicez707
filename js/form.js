@@ -3,6 +3,10 @@ $(document).ready(function() {
         formValidation();
     });
     
+    $('input[name="name"], input[name="ph_number"]').on('input', function() {
+        this.value = this.value.replace(/[^a-zA-Z0-9]/g, '');
+    });
+
     $('input[name="block"], input[name="floor"], input[name="unit"], input[name="sqft"], input[name="ph_number"]').on('input', function() {
         this.value = this.value.replace(/[^0-9]/g, '');
     });
@@ -80,7 +84,7 @@ function formValidation() {
         validFields = false;
     }
     if (phoneNumber && !validatePhoneNumber(phoneNumber)) {
-        $('#phone-error').text('Please enter a valid phone number.');
+        $('#phone-error').text('Must exactly 8 digits & start with 8 or 9 (valid Singapore mobile numbers)');
         validFields = false;
     }
 

@@ -769,7 +769,6 @@ tr:hover td {
 }
 
 /* table css */
-
 .select-box select,
 .search-box input {
     background: rgba(255, 255, 255, 0.03);
@@ -912,8 +911,6 @@ tbody {
     }
 }
 
-
-
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -926,17 +923,15 @@ tbody {
     }
 }
 
-
-
 @media (max-width: 992px) {
-    .container {
+    /* .container {
         flex-direction: column;
     }
 
     .form-section {
         flex: auto;
         padding: 2rem;
-    }
+    } */
 
     .image-section {
         flex: auto;
@@ -946,7 +941,7 @@ tbody {
 }
 
 @media (max-width: 768px) {
-    .container {
+    /* .container {
         margin: 20px;
         padding: 20px;
     }
@@ -961,7 +956,7 @@ tbody {
 
     .question {
         font-size: 1rem;
-    }
+    } */
 
     .search-box input {
         width: 150px;
@@ -985,7 +980,7 @@ tbody {
     width: 50%;
     max-width: 50%;
 }
-
+/* 
 .form-select {
     margin-left: 5px;
     background: rgba(255, 255, 255, 0.03);
@@ -1001,7 +996,7 @@ tbody {
     text-align: left;
     position: relative;
     overflow: hidden;
-}
+} */
 
 .dataTables_filter {
     margin-left: auto;

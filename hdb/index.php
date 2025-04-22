@@ -161,17 +161,17 @@ $flat_type = $response['lead_details'][2]['lead_form_value'];
                         </div>
                         <div class="form-group">
                             <label class="form-label">Block No (BLK)? </label>
-                            <input type="text" name="block" class="form-input" placeholder="Enter No BLK">
+                            <input type="text" name="block" class="form-input" placeholder="Enter No BLK" maxlength="4">
                             <p class="error-message" id="block-error"></p>
                         </div>
                         <div class="form-group">
                             <label class="form-label">What is your unit number?</label>
-                            <input type="text" name="unit" class="form-input" placeholder="Enter unit number">
+                            <input type="text" name="unit" class="form-input" placeholder="Enter unit number" maxlength="4">
                             <p class="error-message" id="unit-error"></p>
                         </div>
                         <div class="form-group">
                             <label class="form-label">What is your floor number? </label>
-                            <input type="text" name="floor" class="form-input" placeholder="Enter floor number">
+                            <input type="text" name="floor" class="form-input" placeholder="Enter floor number" maxlength="2">
                             <p class="error-message" id="floor-error"></p>
                         </div>
                         <div class="alert disclaimer-main-wrapper" style="background-color: var(--card);">
@@ -299,6 +299,11 @@ $flat_type = $response['lead_details'][2]['lead_form_value'];
                                     </table>
                                 </div>
                             </div>
+                        </div>
+                        <div class="result-actions">
+                            <button type="button" class="action-btn secondary" onclick="goToStep(1)">
+                                <i class="fas fa-redo"></i> Start Over
+                            </button>
                         </div>
                     </section>
                 </form>
