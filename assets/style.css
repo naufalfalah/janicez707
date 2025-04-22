@@ -858,7 +858,11 @@ tr:hover td {
 }
 
 .table-box h1 {
-    margin-bottom: 4px;
+    margin-bottom: 18px;
+}
+
+.table {
+    padding: 14px;
 }
 
 tbody {
@@ -867,6 +871,31 @@ tbody {
 
 .col-sm-12 {
     width: 100%;
+}
+
+.col-6 {
+    width: 50%;
+    padding: 8px;
+}
+
+.readonly {
+    background-color: #112053;
+    border-color: #386f8a;
+}
+
+.dataTables_length {
+    height: 100%;
+    padding: 18px;
+}
+
+/* .dataTables_length label {
+    height: auto;
+} */
+
+.dataTables_length label select {
+    display: inline;
+    max-width: 30% !important;
+    margin: auto 4px;
 }
 
 @keyframes hvr-wobble-skew {

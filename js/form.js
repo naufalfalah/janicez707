@@ -37,7 +37,7 @@ $(document).ready(function() {
                 $('#loading-indicator').hide();
                 $('.btn-submit').prop('disabled', false);
                 $('.container').css({
-                    'width': '100%',
+                    'width': '850%',
                     'max-width': '100%'
                 });
 
@@ -171,6 +171,11 @@ function clearRadios(name) {
     radios.forEach(radio => {
         radio.checked = false;
     });
+}
+
+// start over
+function startOver() {
+    window.location.href = '../index';
 }
 
 // Initialize

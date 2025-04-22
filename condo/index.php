@@ -258,23 +258,31 @@ $unit = $response['lead_details'][4]['lead_form_value'];
                             <div class="table-box">
                                 <h1>Resale Flate Price</h1>
                                 <div class="table">
-                                    <table>
-                                        <tr>
-                                            <th colspan="2">Search Results</th>
-                                        </tr>
-                                        <tr>
-                                            <td>HDB Town</td>
-                                            <td id="town-value"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Block Number</td>
-                                            <td id="block-value"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Unit</td>
-                                            <td id="unit-value"></td>
-                                        </tr>
-                                    </table>
+                                    <p>Search Results</p>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <input type="text" class="form-input readonly" value="HDB Town" readonly>
+                                        </div>
+                                        <div class="col-6">
+                                            <input type="text" class="form-input readonly" id="town-value" value="" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <input type="text" class="form-input readonly" value="Block Number" readonly>
+                                        </div>
+                                        <div class="col-6">
+                                            <input type="text" class="form-input readonly" id="block-value" value="" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <input type="text" class="form-input readonly" value="Unit" readonly>
+                                        </div>
+                                        <div class="col-6">
+                                            <input type="text" class="form-input readonly" id="unit-value" value="" readonly>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             
@@ -300,7 +308,7 @@ $unit = $response['lead_details'][4]['lead_form_value'];
                             </div>
                         </div>
                         <div class="result-actions">
-                            <button type="button" class="action-btn secondary" onclick="goToStep(1)">
+                            <button type="button" class="action-btn secondary" onclick="startOver()">
                                 <i class="fas fa-redo"></i> Start Over
                             </button>
                         </div>
@@ -357,14 +365,14 @@ $unit = $response['lead_details'][4]['lead_form_value'];
 
             if (currentStep === 2) {
                 const town = $('select[name="town"]').val();
-                $('#town-value').html(town);
+                $('#town-value').val(town);
                 if (!town) {
                     $('#town-error').text('Please enter town');
                     isValid = false;
                 }
                 
                 const block = $('select[name="block"]').val();
-                $('#block-value').html(block);
+                $('#block-value').val(block);
                 if (!block) {
                     $('#block-error').text('Please enter block');
                     isValid = false;
@@ -381,7 +389,7 @@ $unit = $response['lead_details'][4]['lead_form_value'];
                 }
                 
                 const unit = $('input[name="unit"]').val();
-                $('#unit-value').html(unit);
+                $('#unit-value').val(unit);
                 if (!unit) {
                     $('#unit-error').text('Please enter unit');
                     isValid = false;

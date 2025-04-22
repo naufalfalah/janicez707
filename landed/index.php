@@ -278,23 +278,31 @@ $your_plan = $response['lead_details'][3]['lead_form_value'];
                             <div class="table-box">
                                 <h1>Resale Flate Price</h1>
                                 <div class="table">
-                                    <table>
-                                        <tr>
-                                            <th colspan="2">Search Results</th>
-                                        </tr>
-                                        <tr>
-                                            <td>Street Name</td>
-                                            <td id="street-value"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Sqft</td>
-                                            <td id="sqft-value"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Your Plan</td>
-                                            <td id="plan-value"></td>
-                                        </tr>
-                                    </table>
+                                    <p>Search Results</p>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <input type="text" class="form-input readonly" value="Street Name" readonly>
+                                        </div>
+                                        <div class="col-6">
+                                            <input type="text" class="form-input readonly" id="street-value" value="" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <input type="text" class="form-input readonly" value="Sqft" readonly>
+                                        </div>
+                                        <div class="col-6">
+                                            <input type="text" class="form-input readonly" id="sqft-value" value="" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <input type="text" class="form-input readonly" value="Your Plan" readonly>
+                                        </div>
+                                        <div class="col-6">
+                                            <input type="text" class="form-input readonly" id="plan-value" value="" readonly>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             
@@ -320,7 +328,7 @@ $your_plan = $response['lead_details'][3]['lead_form_value'];
                             </div>
                         </div>
                         <div class="result-actions">
-                            <button type="button" class="action-btn secondary" onclick="goToStep(1)">
+                            <button type="button" class="action-btn secondary" onclick="startOver()">
                                 <i class="fas fa-redo"></i> Start Over
                             </button>
                         </div>
@@ -370,7 +378,7 @@ $your_plan = $response['lead_details'][3]['lead_form_value'];
             $('.error-message').text('');
 
             if (currentStep === 1) {
-                $('#plan-value').html(plan);
+                $('#plan-value').val(plan);
                 if (!plan) {
                     $('#plan-error').text('Please select an option.');
                     isValid = false;
@@ -386,14 +394,14 @@ $your_plan = $response['lead_details'][3]['lead_form_value'];
 
             if (currentStep === 3) {
                 const street = $('select[name="street"]').val();
-                $('#street-value').html(street);
+                $('#street-value').val(street);
                 if (!street) {
                     $('#street-error').text('Please select an option');
                     isValid = false;
                 }
                 
                 const sqft = $('input[name="sqft"]').val();
-                $('#sqft-value').html(sqft);
+                $('#sqft-value').val(sqft);
                 if (!sqft) {
                     $('#sqft-error').text('Please enter sqft');
                     isValid = false;

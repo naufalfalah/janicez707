@@ -247,19 +247,23 @@ $flat_type = $response['lead_details'][2]['lead_form_value'];
                             <div class="table-box">
                                 <h1>Resale Flate Price</h1>
                                 <div class="table">
-                                    <table>
-                                        <tr>
-                                            <th colspan="2">Search Results</th>
-                                        </tr>
-                                        <tr>
-                                            <td>HDB Town</td>
-                                            <td id="town-value"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Flat Type</td>
-                                            <td id="flat-type-value"></td>
-                                        </tr>
-                                    </table>
+                                    <p>Search Results</p>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <input type="text" class="form-input readonly" value="HDB Town" readonly>
+                                        </div>
+                                        <div class="col-6">
+                                            <input type="text" class="form-input readonly" id="town-value" value="" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <input type="text" class="form-input readonly" value="Flat Type" readonly>
+                                        </div>
+                                        <div class="col-6">
+                                            <input type="text" class="form-input readonly" id="flat-type-value" value="" readonly>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="table-box1">
@@ -301,7 +305,7 @@ $flat_type = $response['lead_details'][2]['lead_form_value'];
                             </div>
                         </div>
                         <div class="result-actions">
-                            <button type="button" class="action-btn secondary" onclick="goToStep(1)">
+                            <button type="button" class="action-btn secondary" onclick="startOver()">
                                 <i class="fas fa-redo"></i> Start Over
                             </button>
                         </div>
@@ -363,14 +367,14 @@ $flat_type = $response['lead_details'][2]['lead_form_value'];
 
             if (currentStep === 1) {
                 const town = $('select[name="town"]').val();
-                $('#town-value').html(town)
+                $('#town-value').value(town)
                 if (!town) {
                     $('#town-error').text('Please select an option.');
                     isValid = false;
                 }
 
                 const flatType = $('select[name="flat_type"]').val();
-                $('#flat-type-value').html(flatType)
+                $('#flat-type-value').value(flatType)
                 if (!flatType) {
                     $('#flat-type-error').text('Please select an option.');
                     isValid = false;
