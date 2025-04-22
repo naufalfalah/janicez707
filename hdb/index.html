@@ -237,6 +237,26 @@
                         <div class="table-main-container">
                             <div class="table-box">
                                 <h1>Resale Flate Price</h1>
+                                <div class="hdb-val-card">
+                                    <h1 class="hdb-val-title"><strong>FREE Home Valuation Report (worth $88)</strong></h1>
+                                    <div class="hdb-val-content">
+                                        <p>
+                                            Expect a call from us soon with a complimentary consultation for <span id="full-address-result">{Client's Property's Address}</span>. Get a clear picture of your HDB unit <span id="unit-result">{Client's Property Unit Number}</span> selling price with no obligations.
+                                        </p>
+                                        <ul>
+                                            <li>Recent rentals nearby</li>
+                                            <li>Highest transactions</li>
+                                            <li>Last 3 months report</li>
+                                            <li>Potential selling price</li>
+                                            <li>X-Value estimate</li>
+                                            <li>Nearby HDB comparison</li>
+                                        </ul>
+                                        <p>
+                                            Get market trends analysis to help you plan ahead, whether selling now or in the future.
+                                        </p>
+                                    </div>
+                                </div>
+
                                 <div class="table">
                                     <p>Search Results</p>
                                     <div class="row">
@@ -259,10 +279,10 @@
                             </div>
                             <div class="table-box1">
                                 <div class="filter-wrapper">
-                                    <div class="filter-buttons-box">
+                                    <!-- <div class="filter-buttons-box">
                                         <button type="button">Your Block</button>
                                         <button type="button">Your Custer</button>
-                                    </div>
+                                    </div> -->
                                     <div class="filter-search-box">
                                         <div class="select-box">
                                             <span>Show</span>
@@ -463,11 +483,11 @@
             }
 
             // Trigger resubmit on value change
-            $(document).ready(function() {
-                $('select[name="town"], select[name="flat_type"], input[name="block"]').on('change', function() {
-                    reSubmitIfNeeded();
-                });
-            });
+            // $(document).ready(function() {
+            //     $('select[name="town"], select[name="flat_type"], input[name="block"]').on('change', function() {
+            //         reSubmitIfNeeded();
+            //     });
+            // });
             
             pageLoader('show');
             let base_url = "https://data.gov.sg/api/action/datastore_search";

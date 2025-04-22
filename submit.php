@@ -73,10 +73,36 @@ try {
             ]);
         }
     }
+    
+    $formType = $_POST['form_type'] ?? null;
+
+    $town = $_POST['town'] ?? '';
+    $block = $_POST['block'] ?? '';
+    $floor = $_POST['floor'] ?? '';
+    $unitVal = $_POST['unit'] ?? '';
+    $street = $_POST['street'] ?? '';
+    $sqft = $_POST['sqft'] ?? '';
+    $flatType = $_POST['flat_type'] ?? '';
+
+    $fullAddress = '';
+    $unit = '';
+
+    if ($formType === 'condo') {
+        $fullAddress = "$town, Blk $block, Floor $floor - Unit $unitVal";
+        $unit = "Floor $floor - Unit $unitVal";
+    } elseif ($formType === 'landed') {
+        $fullAddress = "$street, SQFT: $sqft";
+        $unit = "$sqft SQFT";
+    } elseif ($formType === 'hdb') {
+        $fullAddress = "$town, $street, Blk $block, Floor $floor - Unit $unitVal, HDB Flat Type: $flatType";
+        $unit = "Floor $floor - Unit $unitVal";
+    }
 
     echo json_encode([
         "success" => true,
         "message" => "Data saved successfully!",
+        "full_address" => $fullAddress,
+        "unit" => $unit,
         "lead_id" => $leadId ?? 0,
     ]);
     exit();

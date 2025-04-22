@@ -25,7 +25,7 @@ $(document).ready(function() {
         }
         
         const formData = $(this).serialize();
-        // console.log("formData", formData);
+        console.log("formData", formData);
         
         $('#loading-indicator').show();
         $('.btn-submit').prop('disabled', true);
@@ -44,6 +44,9 @@ $(document).ready(function() {
                     'width': '850%',
                     'max-width': '100%'
                 });
+
+                $('#full-address-result').text(response?.full_address ?? '');
+                $('#unit-result').text(response?.unit ?? '');
 
                 nextStep();
             },
