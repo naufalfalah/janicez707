@@ -367,14 +367,14 @@ $flat_type = $response['lead_details'][2]['lead_form_value'];
 
             if (currentStep === 1) {
                 const town = $('select[name="town"]').val();
-                $('#town-value').value(town)
+                $('#town-value').val(town)
                 if (!town) {
                     $('#town-error').text('Please select an option.');
                     isValid = false;
                 }
 
                 const flatType = $('select[name="flat_type"]').val();
-                $('#flat-type-value').value(flatType)
+                $('#flat-type-value').val(flatType)
                 if (!flatType) {
                     $('#flat-type-error').text('Please select an option.');
                     isValid = false;
