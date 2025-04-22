@@ -3,7 +3,11 @@ $(document).ready(function() {
         formValidation();
     });
     
-    $('input[name="name"], input[name="ph_number"]').on('input', function() {
+    $('input[name="name"]').on('input', function() {
+        this.value = this.value.replace(/[^a-zA-Z0-9 ]/g, '');
+    });
+    
+    $('input[name="ph_number"]').on('input', function() {
         this.value = this.value.replace(/[^a-zA-Z0-9]/g, '');
     });
 
