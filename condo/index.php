@@ -1,3 +1,13 @@
+<?php
+
+require_once('../report.php');
+
+$town = $response['lead_details'][0]['lead_form_value'];
+$block = $response['lead_details'][1]['lead_form_value'];
+$unit = $response['lead_details'][4]['lead_form_value'];
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -244,29 +254,66 @@
     
                     <!-- Step 4: Results -->
                     <section class="form-section" id="step-4">
-                        <div class="section-header">
-                            <h1 class="section-title">Your Renovation Results</h1>
-                            <p class="section-subtitle">Here's your estimated renovation budget</p>
-                        </div>
-    
-                        <div class="result-card">
-                            <div class="result-amount">$18,220 - $22,880</div>
-    
-                            <p>This estimate covers all the renovation works you've selected.</p>
-    
-                            <div class="alert">
-                                <p>A confirmation email with the PDF report has been sent to your@email.com</p>
+                        <div class="table-main-container">
+                            <div class="table-box">
+                                <h1>Resale Flate Price</h1>
+                                <div class="table">
+                                    <table>
+                                        <tr>
+                                            <th colspan="2">Search Results</th>
+                                        </tr>
+                                        <tr>
+                                            <td>HDB Town</td>
+                                            <td><?= $town ?? '' ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Block Number</td>
+                                            <td><?= $block ?? '' ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Unit</td>
+                                            <td><?= $unit ?? '' ?></td>
+                                        </tr>
+                                    </table>
+                                </div>
                             </div>
-    
-                            <p>Our team will reach out with a shortlist of Interior Designers shortly.</p>
-    
-                            <div class="result-actions">
-                                <button type="button" class="action-btn primary">
-                                    <i class="fas fa-download"></i> Download Result
-                                </button>
-                                <button type="button" class="action-btn secondary" onclick="goToStep(1)">
-                                    <i class="fas fa-redo"></i> Start Over
-                                </button>
+                            
+                            <!-- Filter and Results Table Section -->
+                            <div class="table-box1">
+                                <!-- <div class="filter-wrapper">
+                                    <div class="filter-search-box">
+                                        <div class="select-box">
+                                            <span>Show</span>
+                                            <select id="custom-length">
+                                                <option value="5">5</option>
+                                                <option value="10" selected>10</option>
+                                                <option value="25">25</option>
+                                                <option value="50">50</option>
+                                            </select>
+                                        </div>
+                                        <div class="search-box">
+                                            <input class="search-field" type="search" placeholder=" ⌕ search here" name="search" id="search-field" />
+                                        </div>
+                                    </div>
+                                </div> -->
+
+                                <div class="table">
+                                    <table id="empTable" class="table table-striped" style="width:100%">
+                                        <tr>
+                                            <th>Date of Sales</th>
+                                            <th>Project Name</th>
+                                            <th>Street Name</th>
+                                            <th>Discrict</th>
+                                            <th>Market Segment</th>
+                                            <th>Tenure</th>
+                                            <th>Type of Sale</th>
+                                            <th>Floor Level</th>
+                                            <th>Area (Sqft)</th>
+                                            <th>Sale Price (S$)</th>
+                                        </tr>
+                                    </table>
+                                    <tbody></tbody>
+                                </div>
                             </div>
                         </div>
                     </section>
@@ -370,5 +417,81 @@
         }
     </script>
     <script src="../js/form.js"></script>
+    <script src="../js/form.js"></script>    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.3/js/standalone/selectize.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        // Cursor follower effect
+        function initCursorFollower() {
+            const follower = document.querySelector('.cursor-follower');
+            let mouseX = 0, mouseY = 0;
+            let followerX = 0, followerY = 0;
+
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+                follower.style.opacity = '1';
+            });
+
+            function animate() {
+                // Smooth following with easing
+                followerX += (mouseX - followerX) * 0.1;
+                followerY += (mouseY - followerY) * 0.1;
+
+                if (follower) {
+                    follower.style.left = `${followerX}px`;
+                    follower.style.top = `${followerY}px`;
+                }
+
+                requestAnimationFrame(animate);
+            }
+
+            animate();
+
+            // Hide follower when mouse leaves window
+            document.addEventListener('mouseleave', () => {
+                follower.style.opacity = '0';
+            });
+
+            document.addEventListener('mouseenter', () => {
+                follower.style.opacity = '1';
+            });
+        }
+        
+        $(document).ready(function () {
+            $('.dataTables_filter label input').attr('placeholder', ' ⌕ search here');
+            $('.basic').select2();
+            let dataTable = initDataTable();
+
+            function initDataTable(pageLength = 10) {
+                $('#empTable').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '../util_project_data.php',
+                        data: function (d) {
+                            d.project = $('#project').val();
+                        }
+                    },
+                    columns: [
+                        { data: 'contractDate' },
+                        { data: 'project' },
+                        { data: 'street' },
+                        { data: 'district' },
+                        { data: 'marketSegment' },
+                        { data: 'tenure' },
+                        { data: 'typeOfSale' },
+                        { data: 'floorRange' },
+                        { data: 'area' },
+                        { data: 'price' }
+                    ],
+                    order: [[0, "desc"]]
+                });
+            }
+        });
+    </script>
 </body>
 </html>
