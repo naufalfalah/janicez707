@@ -172,13 +172,13 @@ $unit = $response['lead_details'][4]['lead_form_value'];
     
                         <div class="form-group">
                             <label class="form-label">What is your unit number?  </label>
-                            <input type="text" name="unit" class="form-input" placeholder="Enter your unit number" >
+                            <input type="text" name="unit" class="form-input" placeholder="Enter your unit number" maxlength="4">
                             <p class="error-message" id="unit-error"></p>
                         </div>
     
                         <div class="form-group">
                             <label class="form-label">What is your floor number?  </label>
-                            <input type="text" name="floor" class="form-input" placeholder="Enter your floor number">
+                            <input type="text" name="floor" class="form-input" placeholder="Enter your floor number" maxlength="2">
                             <p class="error-message" id="floor-error"></p>
                         </div>
     

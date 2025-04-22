@@ -201,7 +201,7 @@ $your_plan = $response['lead_details'][3]['lead_form_value'];
 
                         <div class="form-group">
                             <label class="form-label">Your sqft </label>
-                            <input type="text" name="sqft" class="form-input" placeholder="Enter Your sqft ">
+                            <input type="text" name="sqft" class="form-input" placeholder="Enter Your sqft" maxlength="4">
                             <p class="error-message" id="sqft-error"></p>
                         </div>
 
