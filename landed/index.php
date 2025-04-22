@@ -284,15 +284,15 @@ $your_plan = $response['lead_details'][3]['lead_form_value'];
                                         </tr>
                                         <tr>
                                             <td>Street Name</td>
-                                            <td><?= $street ?? '' ?></td>
+                                            <td id="street-value"></td>
                                         </tr>
                                         <tr>
                                             <td>Sqft</td>
-                                            <td><?= $sqft ?? '' ?></td>
+                                            <td id="sqft-value"></td>
                                         </tr>
                                         <tr>
                                             <td>Your Plan</td>
-                                            <td><?= $your_plan ?? '' ?></td>
+                                            <td id="plan-value"></td>
                                         </tr>
                                     </table>
                                 </div>
@@ -300,30 +300,6 @@ $your_plan = $response['lead_details'][3]['lead_form_value'];
                             
                             <!-- Filter and Results Table Section -->
                             <div class="table-box1">
-                                <!-- <div class="filter-wrapper">
-                                    <div class="filter-buttons-box">
-                                        <button type="button">Your Block</button>
-                                        <button type="button">Your Custer</button>
-                                    </div>
-                                    <div class="filter-search-box">
-                                        <div class="select-box">
-                                            <span>Show</span>
-                                            <select name="project-name" id="project-name">
-                                                <option value="Choose Town" selected>0</option>
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
-                                            </select>
-                                            <span>Entire</span>
-                                        </div>
-                                        <div class="search-box">
-                                            <input class="search-field" type="search" placeholder=" ⌕ search here" name="search"
-                                                id="search">
-                                        </div>
-                                    </div>
-                                </div> -->
-                                
                                 <div class="table">
                                     <table id="empTable" class="table table-striped" style="width:100%">
                                         <tr>
@@ -389,6 +365,7 @@ $your_plan = $response['lead_details'][3]['lead_form_value'];
             $('.error-message').text('');
 
             if (currentStep === 1) {
+                $('#plan-value').html(plan);
                 if (!plan) {
                     $('#plan-error').text('Please select an option.');
                     isValid = false;
@@ -404,12 +381,14 @@ $your_plan = $response['lead_details'][3]['lead_form_value'];
 
             if (currentStep === 3) {
                 const street = $('select[name="street"]').val();
+                $('#street-value').html(street);
                 if (!street) {
                     $('#street-error').text('Please select an option');
                     isValid = false;
                 }
                 
                 const sqft = $('input[name="sqft"]').val();
+                $('#sqft-value').html(sqft);
                 if (!sqft) {
                     $('#sqft-error').text('Please enter sqft');
                     isValid = false;
@@ -443,43 +422,6 @@ $your_plan = $response['lead_details'][3]['lead_form_value'];
     <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
-        // Cursor follower effect
-        function initCursorFollower() {
-            const follower = document.querySelector('.cursor-follower');
-            let mouseX = 0, mouseY = 0;
-            let followerX = 0, followerY = 0;
-
-            document.addEventListener('mousemove', (e) => {
-                mouseX = e.clientX;
-                mouseY = e.clientY;
-                follower.style.opacity = '1';
-            });
-
-            function animate() {
-                // Smooth following with easing
-                followerX += (mouseX - followerX) * 0.1;
-                followerY += (mouseY - followerY) * 0.1;
-
-                if (follower) {
-                    follower.style.left = `${followerX}px`;
-                    follower.style.top = `${followerY}px`;
-                }
-
-                requestAnimationFrame(animate);
-            }
-
-            animate();
-
-            // Hide follower when mouse leaves window
-            document.addEventListener('mouseleave', () => {
-                follower.style.opacity = '0';
-            });
-
-            document.addEventListener('mouseenter', () => {
-                follower.style.opacity = '1';
-            });
-        }
-        
         $(document).ready(function () {
             $('.basic').select2();
 

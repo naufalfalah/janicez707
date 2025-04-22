@@ -252,11 +252,11 @@ $flat_type = $response['lead_details'][2]['lead_form_value'];
                                     </tr>
                                     <tr>
                                         <td>HDB Town</td>
-                                        <td><?= $town ?? '' ?></td>
+                                        <td id="town-value"></td>
                                     </tr>
                                     <tr>
                                         <td>Flat Type</td>
-                                        <td><?= $flat_type ?? '' ?></td>
+                                        <td id="flat-type-value"></td>
                                     </tr>
                                 </table>
                             </div>
@@ -357,12 +357,14 @@ $flat_type = $response['lead_details'][2]['lead_form_value'];
 
             if (currentStep === 1) {
                 const town = $('select[name="town"]').val();
+                $('#town-value').html(town)
                 if (!town) {
                     $('#town-error').text('Please select an option.');
                     isValid = false;
                 }
 
                 const flatType = $('select[name="flat_type"]').val();
+                $('#flat-type-value').html(flatType)
                 if (!flatType) {
                     $('#flat-type-error').text('Please select an option.');
                     isValid = false;
@@ -412,53 +414,30 @@ $flat_type = $response['lead_details'][2]['lead_form_value'];
             return isValid;
         }
     </script>
+    <script src="../js/form.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.3/js/standalone/selectize.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
     <script>
-        // Cursor follower effect
-        function initCursorFollower() {
-            const follower = document.querySelector('.cursor-follower');
-            let mouseX = 0, mouseY = 0;
-            let followerX = 0, followerY = 0;
-
-            document.addEventListener('mousemove', (e) => {
-                mouseX = e.clientX;
-                mouseY = e.clientY;
-                follower.style.opacity = '1';
-            });
-
-            function animate() {
-                // Smooth following with easing
-                followerX += (mouseX - followerX) * 0.1;
-                followerY += (mouseY - followerY) * 0.1;
-
-                if (follower) {
-                    follower.style.left = `${followerX}px`;
-                    follower.style.top = `${followerY}px`;
-                }
-
-                requestAnimationFrame(animate);
-            }
-
-            animate();
-
-            // Hide follower when mouse leaves window
-            document.addEventListener('mouseleave', () => {
-                follower.style.opacity = '0';
-            });
-
-            document.addEventListener('mouseenter', () => {
-                follower.style.opacity = '1';
-            });
-        }
-
         $(document).ready(function() {
             pageLoader('show');
-            let first_request_url = '<?= $first_request_url ?>';
-            let second_request_url = '<?= $second_request_url ?>'; 
+            let base_url = "https://data.gov.sg/api/action/datastore_search";
+            let resource_id = "f1765b54-a209-4718-8d38-a39237f502b3";
+            let first_filters = {
+                month: [],
+                town: '',
+            };
+            let first_request_url = `${base_url}?resource_id=${resource_id}&limit=12000&filters=${encodeURIComponent(JSON.stringify(first_filters))}&sort=month desc`;
+            
+            let second_filters = {
+                month: [],
+                town: '',
+                flat_type: '',
+                block: '',
+            };
+            let second_request_url = `${base_url}?resource_id=${resource_id}&limit=12000&filters=${encodeURIComponent(JSON.stringify(second_filters))}&sort=month desc`;
 
             sendRequest(first_request_url)
                 .then(function (records) {
@@ -521,30 +500,30 @@ $flat_type = $response['lead_details'][2]['lead_form_value'];
                         const entry = records[index];
                         if (entry.block === selectedBlock) {
                             yourBlock += `<tr>
-                                            <td>${formatCurrency(entry.resale_price)}</td>
-                                            <td>${formatDate(entry.month)}</td>
-                                            <td>${entry.block + ', ' + entry.street_name}</td>
-                                            <td>${entry.floor_area_sqm } sqm</td>
-                                            <td>${entry.storey_range}</td>
-                                            <td>${entry.remaining_lease}</td>
-                                        </tr>`;
+                                <td>${formatCurrency(entry.resale_price)}</td>
+                                <td>${formatDate(entry.month)}</td>
+                                <td>${entry.block + ', ' + entry.street_name}</td>
+                                <td>${entry.floor_area_sqm } sqm</td>
+                                <td>${entry.storey_range}</td>
+                                <td>${entry.remaining_lease}</td>
+                            </tr>`;
                             yourCluster += `<tr>
-                                    <td>${formatCurrency(entry.resale_price)}</td>
-                                    <td>${formatDate(entry.month)}</td>
-                                    <td>${entry.block + ', ' + entry.street_name}</td>
-                                    <td>${entry.floor_area_sqm } sqm</td>
-                                    <td>${entry.storey_range}</td>
-                                    <td>${entry.remaining_lease}</td>
-                                </tr>`;
-                        }else{
+                                <td>${formatCurrency(entry.resale_price)}</td>
+                                <td>${formatDate(entry.month)}</td>
+                                <td>${entry.block + ', ' + entry.street_name}</td>
+                                <td>${entry.floor_area_sqm } sqm</td>
+                                <td>${entry.storey_range}</td>
+                                <td>${entry.remaining_lease}</td>
+                            </tr>`;
+                        } else {
                             yourCluster += `<tr>
-                                    <td>${formatCurrency(entry.resale_price)}</td>
-                                    <td>${formatDate(entry.month)}</td>
-                                    <td>${entry.block + ', ' + entry.street_name}</td>
-                                    <td>${entry.floor_area_sqm } sqm</td>
-                                    <td>${entry.storey_range}</td>
-                                    <td>${entry.remaining_lease}</td>
-                                </tr>`;
+                                <td>${formatCurrency(entry.resale_price)}</td>
+                                <td>${formatDate(entry.month)}</td>
+                                <td>${entry.block + ', ' + entry.street_name}</td>
+                                <td>${entry.floor_area_sqm } sqm</td>
+                                <td>${entry.storey_range}</td>
+                                <td>${entry.remaining_lease}</td>
+                            </tr>`;
                         }
                     }
 
@@ -610,7 +589,7 @@ $flat_type = $response['lead_details'][2]['lead_form_value'];
             function pageLoader(status){
                 if (status=="show") {
                     $('.loader-wrapper').removeClass('d-none');
-                }else{
+                } else {
                     $('.loader-wrapper').addClass('d-none');
                 }
             }

@@ -2,7 +2,7 @@
 
 require_once('database.php');
 
-$lead_id = $_GET['lead_id'];
+$lead_id = 1;
 
 // Pehle lead ka data fetch karein
 $sql_lead = "SELECT * FROM leads WHERE id = :lead_id";
