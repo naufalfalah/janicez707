@@ -141,6 +141,7 @@
                             <h1 class="section-title">Address Information</h1>
                             <p class="section-subtitle">Please provide the specific details of your property’s address to help us process your request accurately.</p>
                         </div>
+
                         <div class="form-group">
                             <label class="form-label">What is your Street Name </label>
                             <div class="street-input">
@@ -150,21 +151,25 @@
                             </div>
                             <p class="error-message" id="street-error"></p>
                         </div>
+
                         <div class="form-group">
                             <label class="form-label">Block No (BLK)? </label>
                             <input type="text" name="block" class="form-input" placeholder="Enter No BLK" maxlength="4">
                             <p class="error-message" id="block-error"></p>
                         </div>
-                        <div class="form-group">
-                            <label class="form-label">What is your unit number?</label>
-                            <input type="text" name="unit" class="form-input" placeholder="Enter unit number" maxlength="4">
-                            <p class="error-message" id="unit-error"></p>
-                        </div>
+
                         <div class="form-group">
                             <label class="form-label">What is your floor number? </label>
                             <input type="text" name="floor" class="form-input" placeholder="Enter floor number" maxlength="2">
                             <p class="error-message" id="floor-error"></p>
                         </div>
+
+                        <div class="form-group">
+                            <label class="form-label">What is your unit number?</label>
+                            <input type="text" name="unit" class="form-input" placeholder="Enter unit number" maxlength="4">
+                            <p class="error-message" id="unit-error"></p>
+                        </div>
+
                         <div class="alert disclaimer-main-wrapper" style="background-color: var(--card);">
                             <div class="disclaimer-icon"><i class="fa-solid fa-circle-exclamation"></i></div>
                             <div class="disclaimer-inner-wrapper">
@@ -302,7 +307,7 @@
                                     </div>
                                 </div>
                                 <div class="table">
-                                    <table>
+                                    <table id="hdb-table">
                                         <tr>
                                             <th>Sold Price</th>
                                             <th>Sold Month</th>
@@ -443,94 +448,60 @@
     <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
     <script>
         $(document).ready(function() {
-            let previousTown = '';
-            let previousBlock = '';
-            let previousFlatType = '';
-
-            function reSubmitIfNeeded() {
-                const town = $('select[name="town"]').val();
-                const block = $('input[name="block"]').val();
-                const flatType = $('select[name="flat_type"]').val();
-
-                if (town !== previousTown || block !== previousBlock || flatType !== previousFlatType) {
-                    previousTown = town;
-                    previousBlock = block;
-                    previousFlatType = flatType;
-
-                    // Rebuild second_request_url with updated filters
-                    let base_url = "https://data.gov.sg/api/action/datastore_search";
-                    let resource_id = "f1765b54-a209-4718-8d38-a39237f502b3";
-
-                    let second_filters = {
-                        month: [],
-                        town: town,
-                        flat_type: flatType,
-                        block: block,
-                    };
-                    let updated_url = `${base_url}?resource_id=${resource_id}&limit=12000&filters=${encodeURIComponent(JSON.stringify(second_filters))}&sort=month desc`;
-
-                    pageLoader('show');
-                    sendRequest(updated_url)
-                        .then(function(records) {
-                            setDataIntoTable(records);
-                            pageLoader('hide');
-                        })
-                        .catch(function(error) {
-                            console.error(error);
-                            pageLoader('hide');
-                        });
-                }
-            }
-
-            // Trigger resubmit on value change
-            // $(document).ready(function() {
-            //     $('select[name="town"], select[name="flat_type"], input[name="block"]').on('change', function() {
-            //         reSubmitIfNeeded();
-            //     });
-            // });
-            
-            pageLoader('show');
             let base_url = "https://data.gov.sg/api/action/datastore_search";
             let resource_id = "f1765b54-a209-4718-8d38-a39237f502b3";
-            let first_filters = {
-                month: [],
-                town: '',
-            };
-            let first_request_url = `${base_url}?resource_id=${resource_id}&limit=12000&filters=${encodeURIComponent(JSON.stringify(first_filters))}&sort=month desc`;
-            
-            let second_filters = {
-                month: [],
-                town: '',
-                flat_type: '',
-                block: '',
-            };
-            let second_request_url = `${base_url}?resource_id=${resource_id}&limit=12000&filters=${encodeURIComponent(JSON.stringify(second_filters))}&sort=month desc`;
 
-            sendRequest(first_request_url)
-                .then(function (records) {
-                    // Handle records
-                    // console.log('first',records) 
-                    setDataIntoTable(records);
-                    pageLoader('hide');
-                })
-                .catch(function (error) {
-                    // Handle errors
-                    if (error == 'No records found') {
-                        sendRequest(second_request_url).then(function (records) {
-                            // Handle records
-                            // console.log('second',records)
-
-                            setDataIntoTable(records);
-                            pageLoader('hide');
-                        })
-                        .catch(function (error) {
-                            // Handle errors
-                            console.error(error);
-                            pageLoader('hide');
-                        });
-                    }
-                    // console.error(error);
-                });
+            $('#submit-form').on('form:submitted', function(event, response) {
+                let town = $('select[name="town"]').val();
+                let flatType = $('select[name="flat_type"]').val();
+                let block = $('input[name="block"]').val();
+                let first_filters = {
+                    // month: [],
+                    town,
+                };
+                let first_request_url = `${base_url}`;
+                first_request_url += `?resource_id=${resource_id}`;
+                first_request_url += `&limit=12000`;
+                first_request_url += `&sort=month desc`;
+                first_request_url += `&filters=${encodeURIComponent(JSON.stringify(first_filters))}`;
+                
+                let second_filters = {
+                    // month: [],
+                    town,
+                    flat_type: flatType,
+                    block,
+                };
+                let second_request_url = `${base_url}`;
+                second_request_url += `?resource_id=${resource_id}`;
+                second_request_url += `&limit=12000`;
+                second_request_url += `&sort=month desc`;
+                second_request_url += `&filters=${encodeURIComponent(JSON.stringify(second_filters))}`;
+                
+                console.log('first_request_url', first_request_url);
+                console.log('second_request_url', second_request_url);
+                sendRequest(first_request_url)
+                    .then(function (records) {
+                        // Handle records
+                        // console.log('first', records);
+                        setDataIntoTable(records);
+                    })
+                    .catch(function (error) {
+                        // Handle errors
+                        if (error == 'No records found') {
+                            sendRequest(second_request_url)
+                                .then(function (records) {
+                                    // Handle records
+                                    // console.log('second', records);
+                                    setDataIntoTable(records);
+                                })
+                                .catch(function (error) {
+                                    // Handle errors
+                                    console.error(error);
+                                });
+                        }
+                        console.error(error);
+                    });
+            });
 
             function sendRequest(url) {
                 return new Promise(function (resolve, reject) {
@@ -539,16 +510,9 @@
                         method: 'GET',
                         dataType: 'json',
                         success: function (data) {
-                            if (data && data.result && data.result.records && data.result.records.length > 0) {
-                                // Resolve the promise with the records
-                                resolve(data.result.records);
-                            } else {
-                                // Reject the promise with a message
-                                reject('No records found');
-                            }
+                            resolve(data.result.records);
                         },
-                        error: function () {
-                            // Reject the promise with an error message
+                        error: function (error) {
                             reject('Error fetching data');
                         }
                     });
@@ -556,77 +520,38 @@
             }
 
             function setDataIntoTable(records){
-                var filteredBlocks = [];
-                var selectedBlock = "";
+                const tableData = [];
 
-                var yourBlock = '';
-                var yourCluster = '';
-                
-                if (records.length > 0) {
-                    for (let index = 0; index < records.length; index++) {
-                        const entry = records[index];
-                        if (entry.block === selectedBlock) {
-                            yourBlock += `<tr>
-                                <td>${formatCurrency(entry.resale_price)}</td>
-                                <td>${formatDate(entry.month)}</td>
-                                <td>${entry.block + ', ' + entry.street_name}</td>
-                                <td>${entry.floor_area_sqm } sqm</td>
-                                <td>${entry.storey_range}</td>
-                                <td>${entry.remaining_lease}</td>
-                            </tr>`;
-                            yourCluster += `<tr>
-                                <td>${formatCurrency(entry.resale_price)}</td>
-                                <td>${formatDate(entry.month)}</td>
-                                <td>${entry.block + ', ' + entry.street_name}</td>
-                                <td>${entry.floor_area_sqm } sqm</td>
-                                <td>${entry.storey_range}</td>
-                                <td>${entry.remaining_lease}</td>
-                            </tr>`;
-                        } else {
-                            yourCluster += `<tr>
-                                <td>${formatCurrency(entry.resale_price)}</td>
-                                <td>${formatDate(entry.month)}</td>
-                                <td>${entry.block + ', ' + entry.street_name}</td>
-                                <td>${entry.floor_area_sqm } sqm</td>
-                                <td>${entry.storey_range}</td>
-                                <td>${entry.remaining_lease}</td>
-                            </tr>`;
-                        }
-                    }
+                for (let index = 0; index < records.length; index++) {
+                    const entry = records[index];
 
-                    let nav1 = $("#nav-block-tab");
-                    let nav2 = $("#nav-cluster-tab");
+                    tableData.push([
+                        formatCurrency(entry.resale_price),
+                        formatDate(entry.month),
+                        `${entry.block}, ${entry.street_name}`,
+                        `${entry.floor_area_sqm} sqm`,
+                        entry.storey_range,
+                        entry.remaining_lease
+                    ]);
+                }
 
-                    let tab1 = $("#nav-block");
-                    let tab2 = $("#nav-cluster");
-                    
-                    if (yourBlock) {
-                        tab2.removeClass('show active');
-                        nav2.removeClass('active');
-
-                        tab1.addClass('show active');
-                        nav1.addClass('active');
-                        $("#example2 tbody").html(yourBlock);
-                        new DataTable('#example2');
-                    }
-
-                    if (yourCluster) { 
-                        $("#example tbody").html(yourCluster);
-                        new DataTable('#example');
-                    }
-
-                    $('#show_total_records').html(`${records.length +' ('+formatDate2()+')'}`)
-
-                    var myDiv = document.getElementById('table-guider');
-                    if (window.innerWidth <= 767) {
-                        // Show the div
-                        myDiv.style.display = 'block';
-
-                        // Hide the div after 5 seconds
-                        setTimeout(function () {
-                            myDiv.style.display = 'none';
-                        }, 5000); // 5000 milliseconds = 5 seconds
-                    }
+                if ($.fn.DataTable.isDataTable('#hdb-table')) {
+                    // Destroy the existing table before recreating
+                    $('#hdb-table').DataTable().clear().rows.add(tableData).draw();
+                } else {
+                    $('#hdb-table').DataTable({
+                        data: tableData,
+                        columns: [
+                            { title: "Resale Price" },
+                            { title: "Month" },
+                            { title: "Address" },
+                            { title: "Area" },
+                            { title: "Storey Range" },
+                            { title: "Remaining Lease" }
+                        ],
+                        pageLength: 10,
+                        responsive: true
+                    });
                 }
             }
 
@@ -639,26 +564,6 @@
             function formatDate(dateString) {
                 var date = new Date(dateString);
                 return date.toLocaleString('en-US', { month: 'short', year: 'numeric' });
-            }
-
-            function formatDate2() {
-                var currentDate = new Date();
-                var day = currentDate.getDate();
-                var month = currentDate.toLocaleString('en-US', { month: 'short' });
-                var year = currentDate.getFullYear();
-
-                // Add leading zero to day if necessary
-                day = (day < 10) ? '0' + day : day;
-
-                return day + ' ' + month + ' ' + year;
-            }
-
-            function pageLoader(status){
-                if (status=="show") {
-                    $('.loader-wrapper').removeClass('d-none');
-                } else {
-                    $('.loader-wrapper').addClass('d-none');
-                }
             }
         }); 
     </script>

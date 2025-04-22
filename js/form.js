@@ -3,7 +3,7 @@ $(document).ready(function() {
         formValidation();
     });
     
-    $('input[name="name"]').on('input', function() {
+    $('input[name="name"], input[name="block"]').on('input', function() {
         this.value = this.value.replace(/[^a-zA-Z0-9 ]/g, '');
     });
     
@@ -11,7 +11,7 @@ $(document).ready(function() {
         this.value = this.value.replace(/[^a-zA-Z0-9]/g, '');
     });
 
-    $('input[name="block"], input[name="floor"], input[name="unit"], input[name="sqft"], input[name="ph_number"]').on('input', function() {
+    $('input[name="floor"], input[name="unit"], input[name="sqft"], input[name="ph_number"]').on('input', function() {
         this.value = this.value.replace(/[^0-9]/g, '');
     });
 
@@ -47,6 +47,11 @@ $(document).ready(function() {
 
                 $('#full-address-result').text(response?.full_address ?? '');
                 $('#unit-result').text(response?.unit ?? '');
+
+                const formType = $('input[name="form_type"]').val();
+                if (formType === 'hdb') {
+                    $('#submit-form').trigger('form:submitted', [response]);
+                }
 
                 nextStep();
             },
