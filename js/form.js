@@ -179,7 +179,7 @@ function clearRadios(name) {
 
 // start over
 function startOver() {
-    window.location.href = '../index';
+    window.location.href = '..';
 }
 
 // Initialize

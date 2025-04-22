@@ -1,13 +1,3 @@
-<?php
-
-require_once('../report.php');
-
-$town = $response['lead_details'][0]['lead_form_value'];
-$block = $response['lead_details'][1]['lead_form_value'];
-$unit = $response['lead_details'][4]['lead_form_value'];
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,7 +15,7 @@ $unit = $response['lead_details'][4]['lead_form_value'];
                 <div class="logo-icon">
                     <i class="fas fa-home"></i>
                 </div>
-                <div class="logo-text">Condo</div>
+                <div class="logo-text">Landed</div>
             </div>
 
             <div class="progress-container">
@@ -41,7 +31,7 @@ $unit = $response['lead_details'][4]['lead_form_value'];
             <ul class="steps-list">
                 <li class="step-item active" data-step="2">
                     <div class="step-icon"><i class="fas fa-door-open"></i></div>
-                    <div class="step-text">Valuation Condo</div>
+                    <div class="step-text">Landed Valuation</div>
                     <div class="step-number">1</div>
                 </li>
                 <li class="step-item" data-step="4">
@@ -69,66 +59,66 @@ $unit = $response['lead_details'][4]['lead_form_value'];
         <div class="main-content">
             <div class="container">
                 <form action="" method="POST" id="submit-form">
-                    <input type="hidden" name="form_type" value="condo">
+                    <input type="hidden" name="form_type" value="landed">
                     <input type="hidden" name="source_url" value="https://launchgovtest.homes/">
                     <input type="hidden" name="lead_id" id="lead_id" value="">
 
-                    <!-- Step 1: Property Details -->
+                    <!-- Step 1: plans -->
                     <section class="form-section active" id="step-1">
                         <div class="section-header">
-                            <h1 class="section-title">When do you plan to sell your property? </h1>
-                            <p class="section-subtitle">Understanding your timeline can <span class="Text-Lines">help us assist</span>  you better in making the right decisions</p>
+                            <h1 class="section-title">What are your plans? </h1>
+                            <p class="section-subtitle">Please select the reason for selling your property to help us better understand your goals and provide tailored assistance.</p>
                         </div>
-    
+
                         <div class="form-group">
                             <!-- <label class="form-label">Property Status</label> -->
                             <div class="cards-grid" style="grid-template-columns: repeat(2, 1fr);">
-                                <div class="option-card" data-value="1-3 months" onclick="selectCard(this, 'property-status', '1-3 months')">
+                                <div class="option-card" onclick="selectCardPlan(this, 'property-status', 'Downsize')">
                                     <div class="card-icon"><i class="fa-solid fa-face-smile"></i></div>
-                                    <h3 class="card-title">1-3 months</h3>
+                                    <h3 class="card-title">Downsize</h3>
                                     <!-- <p class="card-description">Brand new property</p> -->
                                     <div class="card-check"><i class="fas fa-check"></i></div>
                                 </div>
-    
-                                <div class="option-card" data-value="3-6 months" onclick="selectCard(this, 'property-status', '3-6 months')">
+
+                                <div class="option-card" onclick="selectCardPlan(this, 'property-status', 'Change of location')">
                                     <div class="card-icon"><i class="fa-solid fa-house"></i></div>
-                                    <h3 class="card-title">3-6 months</h3>
+                                    <h3 class="card-title">Change of location</h3>
                                     <!-- <p class="card-description">Previously owned property</p> -->
                                     <div class="card-check"><i class="fas fa-check"></i></div>
                                 </div>
                             </div>
                         </div>
-    
+
                         <div class="form-group">
                             <div class="cards-grid" style="grid-template-columns: repeat(2, 1fr);">
-                                <div class="option-card" data-value="6-12 months" onclick="selectCard(this, 'property-status', '6-12 months')">
+                                <div class="option-card" onclick="selectCardPlan(this, 'property-status', 'Upgrade')">
                                     <div class="card-icon"><i class="fa-solid fa-file"></i></div>
-                                    <h3 class="card-title">6-12 months</h3>
+                                    <h3 class="card-title">Upgrade</h3>
                                     <!-- <p class="card-description">Brand new property</p> -->
                                     <div class="card-check"><i class="fas fa-check"></i></div>
                                 </div>
-    
-                                <div class="option-card" data-value="Exploring options" onclick="selectCard(this, 'property-status', 'Exploring options')">
+
+                                <div class="option-card" onclick="selectCardPlan(this, 'property-status', 'Cash out')">
                                     <div class="card-icon"><i class="fa-solid fa-bolt"></i></div>
-                                    <h3 class="card-title">Exploring options</h3>
+                                    <h3 class="card-title">Cash out</h3>
                                     <!-- <p class="card-description">Previously owned property</p> -->
                                     <div class="card-check"><i class="fas fa-check"></i></div>
                                 </div>
                             </div>
                         </div>
-    
-                        <p class="error-message" id="sell-error"></p>
-    
+        
+                        <p class="error-message" id="plan-error"></p>
+
                         <div class="alert disclaimer-main-wrapper" style="background-color: var(--card);">
                             <div class="disclaimer-icon"><i class="fa-solid fa-circle-exclamation"></i></div>
                             <div class="disclaimer-inner-wrapper">
                                 <label class="form-label">Important Note:</label>
-                                <p>This report uses reliable sources like URA trends, transaction reports, and X-Value for quick and precise property estimated valuations and provides your unit report.</p>
+                                <p>Please fill up your details and you will be able to retrieve an automated LIVE report extracted base on URA data points.</p>
                             </div>
                         </div>
-    
+
                         <p class="section-subtitle">Complete the questionnaire now for immediate results and exclusive access to the latest <span class="Text-Lines">2025 new launch units</span> from our partnering developers.</p>
-    
+
                         <div class="buttons">
                             <div></div> <!-- Empty div for spacing -->
                             <button type="button" class="btn btn-next">
@@ -136,60 +126,40 @@ $unit = $response['lead_details'][4]['lead_form_value'];
                             </button>
                         </div>
                     </section>
-    
-                    <!-- Step 2: Household Scheme -->
+
+                    <!-- Step 2: like to know-->
                     <section class="form-section" id="step-2">
                         <div class="section-header">
-                            <h1 class="section-title">Project Details </h1>
-                            <p class="section-subtitle">Please provide the specific information about your property to help us assist you better.</p>
+                            <h1 class="section-title">I would like to know</h1>
+                            <p class="section-subtitle">Explore past transaction reports in your area and get an estimate of your property’s selling price based on current market trends and buyer interest.</p>
                         </div>
-    
+
                         <div class="work-category">
                             <div class="form-group">
-                                <label class="form-label">Town </label>
-                                <div class="town-input">
-                                    <select name="town" class="form-select ">
-                                        <option value="">Select town</option>
-                                    </select>
+                                <div class="radio-group-two">
+                                    <div class="radio-wrapper">
+                                        <input type="radio" id="age-1" name="like_to_know" class="radio-input">
+                                        <label for="age-1" class="radio-label" onclick="selectCardLikeToKnow('Past transactions report around the street')">
+                                            <span>Past transactions report around the street</span>
+                                        </label>
+                                    </div>
+                                    <div class="radio-wrapper">
+                                        <input type="radio" id="age-2" name="like_to_know" class="radio-input">
+                                        <label for="age-2" class="radio-label" onclick="selectCardLikeToKnow('My estimated selling price')">
+                                            <span>My estimated selling price</span>
+                                        </label>
+                                    </div>
+                                    <div class="radio-wrapper">
+                                        <input type="radio" id="age-3" name="like_to_know" class="radio-input">
+                                        <label for="age-3" class="radio-label" onclick="selectCardLikeToKnow('Get a gauge how much buyer are willing to offer')">
+                                            <span>Get a gauge how much buyer are willing to offer</span>
+                                        </label>
+                                    </div>
                                 </div>
-                                <p class="error-message" id="town-error"></p>
+                                <p class="error-message" id="like-to-know-error"></p>
                             </div>
                         </div>
-    
-                        <div class="form-group">
-                            <label class="form-label">BLK </label>
-                            <div class="block-input">
-                                <select name="block" class="form-select ">
-                                    <option value="">Select block</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                </select>
-                            </div>
-                            <p class="error-message" id="block-error"></p>
-                        </div>
-    
-                        <div class="form-group">
-                            <label class="form-label">What is your unit number?  </label>
-                            <input type="text" name="unit" class="form-input" placeholder="Enter your unit number" maxlength="4">
-                            <p class="error-message" id="unit-error"></p>
-                        </div>
-    
-                        <div class="form-group">
-                            <label class="form-label">What is your floor number?  </label>
-                            <input type="text" name="floor" class="form-input" placeholder="Enter your floor number" maxlength="2">
-                            <p class="error-message" id="floor-error"></p>
-                        </div>
-    
-                        <div class="alert disclaimer-main-wrapper" style="background-color: var(--card);">
-                            <div class="disclaimer-icon"><i class="fa-solid fa-circle-exclamation"></i></div>
-                            <div class="disclaimer-inner-wrapper">
-                                <label class="form-label">Important Note:</label>
-                                <p>This report uses reliable sources like URA trends, transaction reports, and X-Value for quick and precise property estimated valuations and provides your unit report.</p>
-                            </div>
-                        </div>
-    
+
                         <div class="buttons">
                             <button type="button" class="btn btn-prev" onclick="prevStep()">
                                 <i class="fas fa-arrow-left"></i> Back
@@ -199,9 +169,52 @@ $unit = $response['lead_details'][4]['lead_form_value'];
                             </button>
                         </div>
                     </section>
-    
-                    <!-- Step 3: Age Requirement -->
+
+                    <!-- Step 3: More Details -->
                     <section class="form-section" id="step-3">
+                        <div class="section-header">
+                            <h1 class="section-title">Property Details </h1>
+                            <p class="section-subtitle">Select your street and provide the square footage of your property to help us give you a more accurate valuation and insights.</p>
+                        </div>
+
+                        <div class="work-category">
+                            <div class="form-group">
+                                <label class="form-label">Please select the street </label>
+                                <div class="street-input">
+                                    <select name="street" class="form-select">
+                                        <option value="">Select street</option>
+                                    </select>
+                                </div>
+                                <p class="error-message" id="street-error"></p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Your sqft </label>
+                            <input type="text" name="sqft" class="form-input" placeholder="Enter Your sqft" maxlength="4">
+                            <p class="error-message" id="sqft-error"></p>
+                        </div>
+
+                        <div class="alert disclaimer-main-wrapper" style="background-color: var(--card);">
+                            <div class="disclaimer-icon"><i class="fa-solid fa-circle-exclamation"></i></div>
+                            <div class="disclaimer-inner-wrapper">
+                                <label class="form-label">Important Note:</label>
+                                <p>Please fill up your details and you will be able to retrieve an automated LIVE report extracted base on URA data points.</p>
+                            </div>
+                        </div>
+
+                        <div class="buttons">
+                            <button type="button" class="btn btn-prev" onclick="prevStep()">
+                                <i class="fas fa-arrow-left"></i> Back
+                            </button>
+                            <button type="button" class="btn btn-next">
+                                Continue <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </section>
+
+                    <!-- Step 4: Age Requirement -->
+                    <section class="form-section" id="step-4">
                         <div class="section-header">
                             <h1 class="section-title">Contact Information</h1>
                             <p class="section-subtitle">Enter your details to receive a detailed renovation report</p>
@@ -218,7 +231,7 @@ $unit = $response['lead_details'][4]['lead_form_value'];
                             <input type="email" class="form-input" name="email" placeholder="Enter your email address">
                             <p class="error-message" id="email-error"></p>
                         </div>
-    
+
                         <div class="form-group">
                             <label class="form-label">Contact Number</label>
                             <div class="phone-input">
@@ -229,7 +242,7 @@ $unit = $response['lead_details'][4]['lead_form_value'];
                             </div>
                             <p class="error-message" id="phone-error"></p>
                         </div>
-    
+
                         <div class="checkbox-wrapper last-contact">
                             <input type="checkbox" name="terms" id="terms" class="checkbox-input" checked>
                             <label for="terms" class="checkbox-label">
@@ -238,10 +251,7 @@ $unit = $response['lead_details'][4]['lead_form_value'];
                             </label>
                             <p class="error-message" id="terms-error"></p>
                         </div>
-    
-                        <!-- error message -->
-                        <p class="error-message" id=""></p>
-    
+
                         <div class="buttons">
                             <button type="button" class="btn btn-prev" onclick="prevStep()">
                                 <i class="fas fa-arrow-left"></i> Back
@@ -251,9 +261,9 @@ $unit = $response['lead_details'][4]['lead_form_value'];
                             </button>
                         </div>
                     </section>
-    
-                    <!-- Step 4: Results -->
-                    <section class="form-section" id="step-4">
+
+                    <!-- Step 5: Results -->
+                    <section class="form-section" id="step-5">
                         <div class="table-main-container">
                             <div class="table-box">
                                 <h1>Resale Flate Price</h1>
@@ -261,26 +271,26 @@ $unit = $response['lead_details'][4]['lead_form_value'];
                                     <p>Search Results</p>
                                     <div class="row">
                                         <div class="col-6">
-                                            <input type="text" class="form-input readonly" value="HDB Town" readonly>
+                                            <input type="text" class="form-input readonly" value="Street Name" readonly>
                                         </div>
                                         <div class="col-6">
-                                            <input type="text" class="form-input readonly" id="town-value" value="" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <input type="text" class="form-input readonly" value="Block Number" readonly>
-                                        </div>
-                                        <div class="col-6">
-                                            <input type="text" class="form-input readonly" id="block-value" value="" readonly>
+                                            <input type="text" class="form-input readonly" id="street-value" value="" readonly>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-6">
-                                            <input type="text" class="form-input readonly" value="Unit" readonly>
+                                            <input type="text" class="form-input readonly" value="Sqft" readonly>
                                         </div>
                                         <div class="col-6">
-                                            <input type="text" class="form-input readonly" id="unit-value" value="" readonly>
+                                            <input type="text" class="form-input readonly" id="sqft-value" value="" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <input type="text" class="form-input readonly" value="Your Plan" readonly>
+                                        </div>
+                                        <div class="col-6">
+                                            <input type="text" class="form-input readonly" id="plan-value" value="" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -322,8 +332,9 @@ $unit = $response['lead_details'][4]['lead_form_value'];
     <script>
         // Variables
         let currentStep = 1;
-        const totalSteps = 4;
-        let sell = "";
+        const totalSteps = 5;
+        let plan = "";
+        let likeToKnow = "";
 
         $(document).ready(function() {
             $('.btn-next').on('click', function() {
@@ -334,19 +345,19 @@ $unit = $response['lead_details'][4]['lead_form_value'];
                 nextStep();
             });
 
-            $('select[name="town"], input[name="block"], input[name="floor"], input[name="unit"]').on('change', function() {
+            $('select[name="street"], input[name="sqft"]').on('change', function() {
                 validateStep();
             })
 
-            fetch("../util_data.php?action=getTowns")
+            fetch("../util_data.php?action=getProjects")
                 .then(response => response.json())
                 .then(data => {
-                    const townSelect = $('select[name="town"]');
-                    townSelect.empty();
-                    townSelect.append('<option value="">Select town</option>');
+                    const streetSelect = $('select[name="street"]');
+                    streetSelect.empty();
+                    streetSelect.append('<option value="">Select street</option>');
                     
                     data.forEach(item => {
-                        townSelect.append(`<option value="${item.town}">${item.town}</option>`);
+                        streetSelect.append(`<option value="${item.street}">${item.street}</option>`);
                     });
                 })
                 .catch(error => console.error("Error loading towns:", error));
@@ -357,45 +368,32 @@ $unit = $response['lead_details'][4]['lead_form_value'];
             $('.error-message').text('');
 
             if (currentStep === 1) {
-                if (!sell) {
-                    $('#sell-error').text('Please select an option.');
+                $('#plan-value').val(plan);
+                if (!plan) {
+                    $('#plan-error').text('Please select an option.');
                     isValid = false;
                 }
             }
 
             if (currentStep === 2) {
-                const town = $('select[name="town"]').val();
-                $('#town-value').val(town);
-                if (!town) {
-                    $('#town-error').text('Please enter town');
+                if (!likeToKnow) {
+                    $('#like-to-know-error').text('Please select an option.');
                     isValid = false;
                 }
-                
-                const block = $('select[name="block"]').val();
-                $('#block-value').val(block);
-                if (!block) {
-                    $('#block-error').text('Please enter block');
-                    isValid = false;
-                }
+            }
 
-                const floor = $('input[name="floor"]').val();
-                if (!floor) {
-                    $('#floor-error').text('Please enter floor');
-                    isValid = false;
-                }
-                if (floor && floor > 50) {
-                    $('#floor-error').text('Please enter a floor number less than 50');
+            if (currentStep === 3) {
+                const street = $('select[name="street"]').val();
+                $('#street-value').val(street);
+                if (!street) {
+                    $('#street-error').text('Please select an option');
                     isValid = false;
                 }
                 
-                const unit = $('input[name="unit"]').val();
-                $('#unit-value').val(unit);
-                if (!unit) {
-                    $('#unit-error').text('Please enter unit');
-                    isValid = false;
-                }
-                if (unit && (unit.length < 2 || unit.length > 4)) {
-                    $('#unit-error').text('Please enter a number between 2 and 4 digits');
+                const sqft = $('input[name="sqft"]').val();
+                $('#sqft-value').val(sqft);
+                if (!sqft) {
+                    $('#sqft-error').text('Please enter sqft');
                     isValid = false;
                 }
             }
@@ -404,7 +402,7 @@ $unit = $response['lead_details'][4]['lead_form_value'];
         }
 
         // Select card
-        function selectCard(card, group, value) {
+        function selectCardPlan(card, group, value) {
             // Deselect all cards in same group
             const cards = document.querySelectorAll(`.option-card[onclick*="${group}"]`);
             cards.forEach(c => c.classList.remove('selected'));
@@ -412,7 +410,11 @@ $unit = $response['lead_details'][4]['lead_form_value'];
             // Select clicked card
             card.classList.add('selected');
 
-            sell = value;
+            plan = value;
+        }
+
+        function selectCardLikeToKnow(value) {
+            likeToKnow = value;
         }
     </script>
     <script src="../js/form.js"></script>
@@ -424,19 +426,36 @@ $unit = $response['lead_details'][4]['lead_form_value'];
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
         $(document).ready(function () {
-            $('.dataTables_filter label input').attr('placeholder', ' ⌕ search here');
             $('.basic').select2();
-            let dataTable = initDataTable();
 
-            function initDataTable(pageLength = 10) {
+            // Initial table load
+            load_data({ project: $('#project').val() });
+
+            // Project select change
+            $('#project').on('change', function () {
+                reloadTable();
+            });
+
+            // Search button click
+            $('#search-field').on('keyup', function () {
+                reloadTable();
+            });
+
+            function reloadTable() {
+                $('#empTable').DataTable().destroy();
+                load_data({
+                    project: $('#project').val(),
+                    search: $('#search-field').val(),
+                });
+            }
+
+            function load_data(params = {}) {
                 $('#empTable').DataTable({
                     processing: true,
                     serverSide: true,
                     ajax: {
                         url: '../util_project_data.php',
-                        data: function (d) {
-                            d.project = $('#project').val();
-                        }
+                        data: params
                     },
                     columns: [
                         { data: 'contractDate' },

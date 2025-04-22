@@ -2,33 +2,9 @@
 
 require_once('database.php');
 
-$lead_id = 1;
+$response = [];
 
-// Pehle lead ka data fetch karein
-$sql_lead = "SELECT * FROM leads WHERE id = :lead_id";
-$stmt = $pdo->prepare($sql_lead);
-$stmt->bindParam(':lead_id', $lead_id, PDO::PARAM_INT);
-$stmt->execute();
-$lead = $stmt->fetch(PDO::FETCH_ASSOC);
-
-// Agar lead nahi mili to return karein
-if (!$lead) {
-    die("No lead found with ID: $lead_id");
-}
-
-// Ab lead_details ka data fetch karein
-$sql_details = "SELECT * FROM lead_details WHERE lead_id = :lead_id";
-$stmt = $pdo->prepare($sql_details);
-$stmt->bindParam(':lead_id', $lead_id, PDO::PARAM_INT);
-$stmt->execute();
-$lead_details = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-// Final formatted output
-$response = [
-    'lead' => $lead,  // Lead ka single record
-    'lead_details' => $lead_details // Lead details ka array
-];
-
+// Helper
 function get_town_blocks($pdo, $town)
 {
     $townQuery = "SELECT id FROM towns WHERE town = :town";
@@ -64,8 +40,7 @@ function get_town_blocks($pdo, $town)
     return $data_arr;
 }
 
-$form_type = $response['lead']['form_type'];
-
+// Report functions
 if (isset($form_type) && $form_type == 'hdb') {
     $base_url = "https://data.gov.sg/api/action/datastore_search";
     $resource_id = "f1765b54-a209-4718-8d38-a39237f502b3";
@@ -81,10 +56,10 @@ if (isset($form_type) && $form_type == 'hdb') {
     $second_request_url = '';
 
     // Inputs
-    $town_value = strtoupper($response['lead_details']['0']['lead_form_value'] ?? '');
-    $street_name_value = strtoupper($response['lead_details']['1']['lead_form_value'] ?? '');
-    $block_value = $response['lead_details']['2']['lead_form_value'] ?? '';
-    $flat_type_value = strtoupper($response['lead_details']['3']['lead_form_value'] ?? '');
+    // $town_value = strtoupper($response['lead_details']['0']['lead_form_value'] ?? '');
+    // $street_name_value = strtoupper($response['lead_details']['1']['lead_form_value'] ?? '');
+    // $block_value = $response['lead_details']['2']['lead_form_value'] ?? '';
+    // $flat_type_value = strtoupper($response['lead_details']['3']['lead_form_value'] ?? '');
 
     $blocks = !empty($block_value) ? get_town_blocks($pdo, $town_value) : [];
 
@@ -170,7 +145,7 @@ if (isset($form_type) && $form_type == 'hdb') {
 }
 
 if (isset($form_type) && $form_type === 'condo') {
-    $project_id = $response['lead_details'][1]['lead_form_value'] ?? null;
+    // $project_id = $response['lead_details'][1]['lead_form_value'] ?? null;
     $project_id = 4607;
     // var_dump($project_id);
     // die;
@@ -419,11 +394,12 @@ if (isset($form_type) && $form_type === 'condo') {
 }
 
 if (isset($form_type) && $form_type == 'landed') {
-    $project_id = $response['lead_details'][1]['lead_form_value'] ?? null;
+    $project_id = 4607;
+    // $project_id = $response['lead_details'][1]['lead_form_value'] ?? null;
 
-    if (!$project_id) {
-        exit("Project ID not found.");
-    }
+    // if (!$project_id) {
+    //     exit("Project ID not found.");
+    // }
 
     // Fetch distinct sales dates
     $sales_date_option = '<option value="">Any Sales Year</option>';
