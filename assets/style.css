@@ -10,8 +10,8 @@
     --background: #08102c;
     --card: #1e293b;
     --border: #334155;
-    --shadow: 0 4px 12px rgb(39 146 169 / 20%);
-    --shadow-hover: 0 8px 24px rgb(40 148 170 / 34%);
+    --shadow: 0 4px 12px rgba(39, 145, 169, 0.774);
+    --shadow-hover: 0 8px 24px rgba(100, 20, 20, 0.34);
     --radius: 12px;
     --heading: linear-gradient(90deg, #fff 0%, var(--text) 80%);
 }
@@ -509,6 +509,18 @@ body {
     flex-shrink: 0;
 }
 
+@media (max-width: 992px) {
+    .phone-input {
+        display: block;
+        gap: 12px;
+    }
+
+    .phone-code {
+        width: 100%;
+        margin-bottom: 12px;
+    }
+}
+
 /* Buttons */
 .buttons {
     display: flex;
@@ -800,7 +812,7 @@ tr:hover td {
     border-color: var(--accent);
     /* margin-top: -5px;
             margin-bottom: 5px; */
-    box-shadow: 0 0px 8px #b4843129;
+    box-shadow: 0 0px 8px var(--shadow);
     /* transform: translateY(-5px); */
 }
 
@@ -830,7 +842,7 @@ tr:hover td {
 
 .filter-buttons-box button:hover {
     transform: translateY(-5px);
-    box-shadow: 0 15px 30px #774e065e;
+    box-shadow: 0 15px 30px var(--shadow-hover);
     animation: hvr-wobble-skew 1s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
@@ -867,15 +879,6 @@ tr:hover td {
 
 tbody {
     width: 100%;
-}
-
-.col-sm-12 {
-    width: 100%;
-}
-
-.col-6 {
-    width: 50%;
-    padding: 8px;
 }
 
 .readonly {
@@ -1011,7 +1014,27 @@ tbody {
 
 .col-md-6 {
     width: 50%;
-    max-width: 50%;
+}
+
+.col-6 {
+    width: 50%;
+    padding: 8px;
+}
+
+@media (max-width: 992px) {
+    .row {
+        display: block;
+        padding: 10px;
+    }
+
+    .col-6 {
+        width: 100%;
+        padding: 8px;
+    }
+
+    .col-sm-12 {
+        width: 100%;
+    }
 }
 /* 
 .form-select {
@@ -1059,7 +1082,7 @@ tbody {
     border-color: var(--accent);
     /* margin-top: -5px;
             margin-bottom: 5px; */
-    box-shadow: 0 0px 8px #b4843129;
+    box-shadow: 0 0px 8px var(--shadow);
     /* transform: translateY(-5px); */
 }
 
@@ -1088,7 +1111,7 @@ tbody {
     border-radius: 12px;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 6px 15px rgba(230, 74, 25, 0.3);
+    box-shadow: 0 6px 15px var(--shadow);
     position: relative;
     overflow: hidden;
 }
@@ -1100,7 +1123,7 @@ tbody {
 
 .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
     background: linear-gradient(130deg, var(--accent), var(--primary-dark));
-    box-shadow: 0 10px 20px #774e065a;
+    box-shadow: 0 10px 20px var(--shadow-hover);
     transform: translateY(-3px);
 }
 
@@ -1108,7 +1131,7 @@ tbody {
     background: linear-gradient(130deg, var(--accent), var(--primary));
     color: #fff !important;
     font-weight: bold;
-    box-shadow: 0 10px 25px rgba(180, 132, 49, 0.5);
+    box-shadow: 0 10px 25px var(--shadow);
     transform: translateY(-1px);
 }
 
