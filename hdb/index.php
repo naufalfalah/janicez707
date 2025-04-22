@@ -242,63 +242,64 @@ $flat_type = $response['lead_details'][2]['lead_form_value'];
                     </section>
     
                     <!-- Step 4: Results -->
-                    <section class="form-section" id="step-4"><div class="table-main-container">
-                        <div class="table-box">
-                            <h1>Resale Flate Price</h1>
-                            <div class="table">
-                                <table>
-                                    <tr>
-                                        <th colspan="2">Search Results</th>
-                                    </tr>
-                                    <tr>
-                                        <td>HDB Town</td>
-                                        <td id="town-value"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Flat Type</td>
-                                        <td id="flat-type-value"></td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="table-box1">
-                            <div class="filter-wrapper">
-                                <div class="filter-buttons-box">
-                                    <button type="button">Your Block</button>
-                                    <button type="button">Your Custer</button>
-                                </div>
-                                <div class="filter-search-box">
-                                    <div class="select-box">
-                                        <span>Show</span>
-                                        <select name="project-name" id="project-name">
-                                            <option value="Choose Town" selected>0</option>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                        </select>
-                                        <span>Entire</span>
-                                    </div>
-                                    <div class="search-box">
-                                        <input class="search-field" type="search" placeholder=" ⌕ search here" name="search"
-                                            id="search">
-                                    </div>
+                    <section class="form-section report" id="step-4">
+                        <div class="table-main-container">
+                            <div class="table-box">
+                                <h1>Resale Flate Price</h1>
+                                <div class="table">
+                                    <table>
+                                        <tr>
+                                            <th colspan="2">Search Results</th>
+                                        </tr>
+                                        <tr>
+                                            <td>HDB Town</td>
+                                            <td id="town-value"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Flat Type</td>
+                                            <td id="flat-type-value"></td>
+                                        </tr>
+                                    </table>
                                 </div>
                             </div>
-                            <div class="table">
-                                <table>
-                                    <tr>
-                                        <th>Sold Price</th>
-                                        <th>Sold Month</th>
-                                        <th>Address</th>
-                                        <th>Area</th>
-                                        <th>Level</th>
-                                        <th>Remaining Lease</th>
-                                    </tr>
-                                </table>
+                            <div class="table-box1">
+                                <div class="filter-wrapper">
+                                    <div class="filter-buttons-box">
+                                        <button type="button">Your Block</button>
+                                        <button type="button">Your Custer</button>
+                                    </div>
+                                    <div class="filter-search-box">
+                                        <div class="select-box">
+                                            <span>Show</span>
+                                            <select name="project-name" id="project-name">
+                                                <option value="Choose Town" selected>0</option>
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                            </select>
+                                            <span>Entire</span>
+                                        </div>
+                                        <div class="search-box">
+                                            <input class="search-field" type="search" placeholder=" ⌕ search here" name="search"
+                                                id="search">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table">
+                                    <table>
+                                        <tr>
+                                            <th>Sold Price</th>
+                                            <th>Sold Month</th>
+                                            <th>Address</th>
+                                            <th>Area</th>
+                                            <th>Level</th>
+                                            <th>Remaining Lease</th>
+                                        </tr>
+                                    </table>
+                                </div>
                             </div>
                         </div>
-                    </div>
                     </section>
                 </form>
             </div>
@@ -422,6 +423,52 @@ $flat_type = $response['lead_details'][2]['lead_form_value'];
     <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
     <script>
         $(document).ready(function() {
+            let previousTown = '';
+            let previousBlock = '';
+            let previousFlatType = '';
+
+            function reSubmitIfNeeded() {
+                const town = $('select[name="town"]').val();
+                const block = $('input[name="block"]').val();
+                const flatType = $('select[name="flat_type"]').val();
+
+                if (town !== previousTown || block !== previousBlock || flatType !== previousFlatType) {
+                    previousTown = town;
+                    previousBlock = block;
+                    previousFlatType = flatType;
+
+                    // Rebuild second_request_url with updated filters
+                    let base_url = "https://data.gov.sg/api/action/datastore_search";
+                    let resource_id = "f1765b54-a209-4718-8d38-a39237f502b3";
+
+                    let second_filters = {
+                        month: [],
+                        town: town,
+                        flat_type: flatType,
+                        block: block,
+                    };
+                    let updated_url = `${base_url}?resource_id=${resource_id}&limit=12000&filters=${encodeURIComponent(JSON.stringify(second_filters))}&sort=month desc`;
+
+                    pageLoader('show');
+                    sendRequest(updated_url)
+                        .then(function(records) {
+                            setDataIntoTable(records);
+                            pageLoader('hide');
+                        })
+                        .catch(function(error) {
+                            console.error(error);
+                            pageLoader('hide');
+                        });
+                }
+            }
+
+            // Trigger resubmit on value change
+            $(document).ready(function() {
+                $('select[name="town"], select[name="flat_type"], input[name="block"]').on('change', function() {
+                    reSubmitIfNeeded();
+                });
+            });
+            
             pageLoader('show');
             let base_url = "https://data.gov.sg/api/action/datastore_search";
             let resource_id = "f1765b54-a209-4718-8d38-a39237f502b3";

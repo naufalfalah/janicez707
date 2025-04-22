@@ -32,7 +32,11 @@ $(document).ready(function() {
 
                 $('#loading-indicator').hide();
                 $('.btn-submit').prop('disabled', false);
-                
+                $('.container').css({
+                    'width': '100%',
+                    'max-width': '100%'
+                });
+
                 nextStep();
             },
             error: function(xhr, status, error) {
