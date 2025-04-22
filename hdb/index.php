@@ -300,6 +300,11 @@ $flat_type = $response['lead_details'][2]['lead_form_value'];
                                             <th>Level</th>
                                             <th>Remaining Lease</th>
                                         </tr>
+                                        <tr>
+                                            <td colspan="6">
+                                                No record available
+                                            </td>
+                                        </tr>
                                     </table>
                                 </div>
                             </div>
