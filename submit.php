@@ -53,31 +53,31 @@ foreach ($leadFields as $field) {
 }
 
 try {
-    $stmt = $pdo->prepare("INSERT INTO leads (form_type, source_url, firstname, ph_number, email) 
-                          VALUES (:form_type, :source_url, :name, :ph_number, :email)");
-    $stmt->execute($leadData);
-    $leadId = $pdo->lastInsertId(); // Get inserted lead ID
+    // $stmt = $pdo->prepare("INSERT INTO leads (form_type, source_url, firstname, ph_number, email) 
+    //                       VALUES (:form_type, :source_url, :name, :ph_number, :email)");
+    // $stmt->execute($leadData);
+    // $leadId = $pdo->lastInsertId(); // Get inserted lead ID
 
-    $extraFields = array_diff_key($data, array_flip($leadFields));
-    unset($extraFields['user_otp'], $extraFields['wp_otp'], $extraFields['lead_id']);
+    // $extraFields = array_diff_key($data, array_flip($leadFields));
+    // unset($extraFields['user_otp'], $extraFields['wp_otp'], $extraFields['lead_id']);
 
-    if (!empty($extraFields)) {
-        $stmt = $pdo->prepare("INSERT INTO lead_details (lead_id, lead_form_key, lead_form_value) 
-                              VALUES (:lead_id, :lead_form_key, :lead_form_value)");
+    // if (!empty($extraFields)) {
+    //     $stmt = $pdo->prepare("INSERT INTO lead_details (lead_id, lead_form_key, lead_form_value) 
+    //                           VALUES (:lead_id, :lead_form_key, :lead_form_value)");
                     
-        foreach ($extraFields as $key => $value) {
-            $stmt->execute([
-                ':lead_id' => $leadId,
-                ':lead_form_key' => $key,
-                ':lead_form_value' => is_array($value) ? implode('| ', $value) : $value
-            ]);
-        }
-    }
+    //     foreach ($extraFields as $key => $value) {
+    //         $stmt->execute([
+    //             ':lead_id' => $leadId,
+    //             ':lead_form_key' => $key,
+    //             ':lead_form_value' => is_array($value) ? implode('| ', $value) : $value
+    //         ]);
+    //     }
+    // }
 
     echo json_encode([
         "success" => true,
         "message" => "Data saved successfully!",
-        "lead_id" => $leadId,
+        "lead_id" => $leadId ?? 0,
     ]);
     exit();
 } catch (PDOException $e) {

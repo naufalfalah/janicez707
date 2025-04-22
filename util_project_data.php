@@ -152,7 +152,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         "typeOfSale" => $typeOfSale,
         "floorRange" => $row['floorRange'],
         "area" => ceil($row['area'] * 10.76391042),
-        "price" => number_format($row['price'])
+        "price" => '$'.number_format($row['price'])
     ];
 }
 
