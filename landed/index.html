@@ -358,6 +358,8 @@
         function checkFormFinished() {
             const isFormFinished = sessionStorage.getItem('finish_form');
             const timestamp = sessionStorage.getItem('finish_form_timestamp');
+            console.log('isFormFinished', isFormFinished);
+            console.log('timestamp', timestamp);
 
             if (!isFormFinished || !timestamp) {
                 return false;
@@ -373,7 +375,7 @@
                 return false;
             }
 
-            if (isFinishedForm !== 'landed') {
+            if (isFormFinished !== 'landed') {
                 return false;
             }
 

@@ -63,16 +63,16 @@ $(document).ready(function() {
                 const sqft = $('#sqft').val() ?? "";
 
                 const timestamp = new Date().getTime();
-                sessionStorage.getItem('finish_form', formType);
-                sessionStorage.getItem('finish_form', timestamp.toString());
-                sessionStorage.getItem('project', project);
-                sessionStorage.getItem('block', block);
-                sessionStorage.getItem('unit', unit);
-                sessionStorage.getItem('town', town);
-                sessionStorage.getItem('flat_type', flat_type);
-                sessionStorage.getItem('street', street);
-                sessionStorage.getItem('plan', plan);
-                sessionStorage.getItem('sqft', sqft);
+                sessionStorage.setItem('finish_form', formType);
+                sessionStorage.setItem('finish_form_timestamp', timestamp.toString());
+                sessionStorage.setItem('project', project);
+                sessionStorage.setItem('block', block);
+                sessionStorage.setItem('unit', unit);
+                sessionStorage.setItem('town', town);
+                sessionStorage.setItem('flat_type', flat_type);
+                sessionStorage.setItem('street', street);
+                sessionStorage.setItem('plan', plan);
+                sessionStorage.setItem('sqft', sqft);
 
                 nextStep();
             },
