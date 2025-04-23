@@ -441,13 +441,13 @@
             if (currentStep === 2) {
                 const street = $('select[name="street"]').val();
                 if (!street) {
-                    $('#street-error').text('Please enter town');
+                    $('#street-error').text('Please select street');
                     isValid = false;
                 }
                 
-                const block = $('input[name="block"]').val();
+                const block = $('select[name="block"]').val();
                 if (!block) {
-                    $('#block-error').text('Please enter block');
+                    $('#block-error').text('Please select block');
                     isValid = false;
                 }
 
