@@ -140,7 +140,6 @@
                                 <label class="form-label">Project </label>
                                 <div class="project-input">
                                     <select name="project" id="project" class="form-select">
-                                        <option value="">Select project</option>
                                     </select>
                                 </div>
                                 <p class="error-message" id="project-error"></p>
@@ -365,7 +364,8 @@
         });
 
         $('#project').select2({
-            allowClear: true
+            placeholder: 'Select project',
+            allowClear: true,
         });
 
         function validateStep() {

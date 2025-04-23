@@ -183,7 +183,6 @@
                                 <label class="form-label">Please select the street </label>
                                 <div class="street-input">
                                     <select name="street" id="street" class="form-select">
-                                        <option value="">Select street</option>
                                     </select>
                                 </div>
                                 <p class="error-message" id="street-error"></p>
@@ -387,8 +386,9 @@
                 .catch(error => console.error("Error loading towns:", error));
 
             $('#street').select2({
-                allowClear: true
-            });
+                placeholder: 'Select street',
+                allowClear: true,
+            })
         });
 
         function validateStep() {

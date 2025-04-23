@@ -76,7 +76,6 @@
                                 <label class="form-label">Where is your HDB located?  </label>
                                 <div class="town-input">
                                     <select name="town" id="town" class="form-select">
-                                        <option value="">Select town</option>
                                     </select>
                                 </div>
                                 <p class="error-message" id="town-error"></p>
@@ -145,7 +144,6 @@
                             <label class="form-label">What is your Street Name </label>
                             <div class="street-input">
                                 <select name="street" id="street" class="form-select">
-                                    <option value="">Select street</option>
                                 </select>
                             </div>
                             <p class="error-message" id="street-error"></p>
@@ -155,7 +153,6 @@
                             <label class="form-label">Block No (BLK)? </label>
                             <div class="street-input">
                                 <select name="block" id="block" class="form-select">
-                                    <option value="">Select block</option>
                                 </select>
                             </div>
                             <p class="error-message" id="block-error"></p>
@@ -401,15 +398,18 @@
             });
 
             $('#town').select2({
-                allowClear: true
-            });
+                placeholder: 'Select town',
+                allowClear: true,
+            })
 
             $('#street').select2({
-                allowClear: true
-            });
+                placeholder: 'Select street',
+                allowClear: true,
+            })
             
             $('#block').select2({
-                allowClear: true
+                placeholder: 'Select block',
+                allowClear: true,
             });
         });
 
