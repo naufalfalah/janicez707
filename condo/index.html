@@ -148,15 +148,7 @@
     
                         <div class="form-group">
                             <label class="form-label">BLK </label>
-                            <div class="block-input">
-                                <select name="block" class="form-select">
-                                    <option value="">Select block</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                </select>
-                            </div>
+                            <input type="text" name="block" class="form-input" placeholder="Enter your block number" maxlength="4">
                             <p class="error-message" id="block-error"></p>
                         </div>
     
@@ -387,10 +379,10 @@
                     isValid = false;
                 }
                 
-                const block = $('select[name="block"]').val();
+                const block = $('input[name="block"]').val();
                 $('#block-value').val(block);
                 if (!block) {
-                    $('#block-error').text('Please select block');
+                    $('#block-error').text('Please enter block');
                     isValid = false;
                 }
 
@@ -436,17 +428,28 @@
         $(document).ready(function () {
             $('.dataTables_filter label input').attr('placeholder', ' ⌕ search here');
             $('.basic').select2();
-            let dataTable = initDataTable();
 
-            function initDataTable(pageLength = 10) {
+            // Initial table load
+            load_data({});
+            
+            $('#search-field').on('keyup', function () {
+                reloadTable();
+            });
+
+            function reloadTable() {
+                $('#empTable').DataTable().destroy();
+                load_data({
+                    search: $('#search-field').val(),
+                });
+            }
+
+            function load_data(params = {}) {
                 $('#empTable').DataTable({
                     processing: true,
                     serverSide: true,
                     ajax: {
                         url: '../util_project_data.php',
-                        data: function (d) {
-                            d.project = $('#project').val();
-                        }
+                        data: params
                     },
                     columns: [
                         { data: 'contractDate' },
