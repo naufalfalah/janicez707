@@ -70,6 +70,7 @@
                             <h1 class="section-title">When do you plan to sell your property? </h1>
                             <p class="section-subtitle">Understanding your timeline can <span class="Text-Lines">help us assist</span>  you better in making the right decisions</p>
                         </div>
+                        <input type="hidden" name="sell" id="sell" value="">
     
                         <div class="form-group">
                             <!-- <label class="form-label">Property Status</label> -->
@@ -148,19 +149,19 @@
     
                         <div class="form-group">
                             <label class="form-label">BLK </label>
-                            <input type="text" name="block" class="form-input" placeholder="Enter your block number" maxlength="4">
+                            <input type="text" name="block" id="block" class="form-input" placeholder="Enter your block number" maxlength="4">
                             <p class="error-message" id="block-error"></p>
                         </div>
     
                         <div class="form-group">
                             <label class="form-label">What is your floor number?  </label>
-                            <input type="text" name="floor" class="form-input" placeholder="Enter your floor number" maxlength="2">
+                            <input type="text" name="floor" id="floor" class="form-input" placeholder="Enter your floor number" maxlength="2">
                             <p class="error-message" id="floor-error"></p>
                         </div>
     
                         <div class="form-group">
                             <label class="form-label">What is your unit number?  </label>
-                            <input type="text" name="unit" class="form-input" placeholder="Enter your unit number" maxlength="4">
+                            <input type="text" name="unit" id="unit" class="form-input" placeholder="Enter your unit number" maxlength="4">
                             <p class="error-message" id="unit-error"></p>
                         </div>
     
@@ -323,10 +324,40 @@
     <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
+        function checkFormFinished() {
+            const isFormFinished = sessionStorage.getItem('finish_form');
+            const timestamp = sessionStorage.getItem('finish_form_timestamp');
+
+            if (!isFormFinished || !timestamp) {
+                return false;
+            }
+
+            const now = new Date().getTime();
+            const elapsed = now - parseInt(timestamp);
+            const maxDuration = 5 * 6 * 1000; // 5 mins
+
+            if (elapsed > maxDuration) {
+                sessionStorage.removeItem('finish_form');
+                sessionStorage.removeItem('finish_form_timestamp');
+                return false;
+            }
+
+            if (isFinishedForm !== 'condo') {
+                return false;
+            }
+            console.log('isFormFinished', isFormFinished);
+            console.log('timestamp', timestamp);
+
+            return true;
+        }
+
         // Variables
-        let currentStep = 1;
         const totalSteps = 4;
+        let currentStep = checkFormFinished() ? totalSteps : 1;
         let sell = "";
+        let project = sessionStorage.getItem('project') ?? '';
+        let block = sessionStorage.getItem('block') ?? '';
+        let unit = sessionStorage.getItem('unit') ?? '';
 
         $(document).ready(function() {
             $('.btn-next').on('click', function() {
@@ -360,11 +391,16 @@
             allowClear: true,
         });
 
+        $('#project-value').val(project);
+        $('#block-value').val(block);
+        $('#unit-value').val(unit);
+
         function validateStep() {
             let isValid = true
             $('.error-message').text('');
 
             if (currentStep === 1) {
+                $('#sell').val(sell)
                 if (!sell) {
                     $('#sell-error').text('Please select an option.');
                     isValid = false;

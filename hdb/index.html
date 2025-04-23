@@ -339,9 +339,38 @@
     <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
+        function checkFormFinished() {
+            const isFormFinished = sessionStorage.getItem('finish_form');
+            const timestamp = sessionStorage.getItem('finish_form_timestamp');
+
+            if (!isFormFinished || !timestamp) {
+                return false;
+            }
+
+            const now = new Date().getTime();
+            const elapsed = now - parseInt(timestamp);
+            const maxDuration = 5 * 6 * 1000; // 5 mins
+
+            if (elapsed > maxDuration) {
+                sessionStorage.removeItem('finish_form');
+                sessionStorage.removeItem('finish_form_timestamp');
+                return false;
+            }
+
+            if (isFinishedForm !== 'hdb') {
+                return false;
+            }
+            console.log('isFormFinished', isFormFinished);
+            console.log('timestamp', timestamp);
+
+            return true;
+        }
+
         // Variables
-        let currentStep = 1;
         const totalSteps = 4;
+        let currentStep = checkFormFinished() ? totalSteps : 1;
+        let town = sessionStorage.getItem('town') ?? '';
+        let flat_type = sessionStorage.getItem('flat_type') ?? '';
 
         $(document).ready(function() {
             $('.btn-next').on('click', function() {
@@ -411,6 +440,9 @@
                 allowClear: true,
             });
         });
+
+        $('#town-value').val(town);
+        $('#flat-type-value').val(flat_type);
 
         function validateStep() {
             let isValid = true

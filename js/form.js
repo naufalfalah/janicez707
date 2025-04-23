@@ -53,6 +53,27 @@ $(document).ready(function() {
                     $('#submit-form').trigger('form:submitted', [response]);
                 }
 
+                const project = $('#project').val() ?? "";
+                const block = $('#block').val() ?? "";
+                const unit = $('#unit').val() ?? "";
+                const town = $('#town').val() ?? "";
+                const flat_type = $('#flat_type').val() ?? "";
+                const street = $('#street').val() ?? "";
+                const plan = $('#plan').val() ?? "";
+                const sqft = $('#sqft').val() ?? "";
+
+                const timestamp = new Date().getTime();
+                sessionStorage.getItem('finish_form', formType);
+                sessionStorage.getItem('finish_form', timestamp.toString());
+                sessionStorage.getItem('project', project);
+                sessionStorage.getItem('block', block);
+                sessionStorage.getItem('unit', unit);
+                sessionStorage.getItem('town', town);
+                sessionStorage.getItem('flat_type', flat_type);
+                sessionStorage.getItem('street', street);
+                sessionStorage.getItem('plan', plan);
+                sessionStorage.getItem('sqft', sqft);
+
                 nextStep();
             },
             error: function(xhr, status, error) {

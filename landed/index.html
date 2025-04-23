@@ -70,6 +70,7 @@
                             <h1 class="section-title">What are your plans? </h1>
                             <p class="section-subtitle">Please select the reason for selling your property to help us better understand your goals and provide tailored assistance.</p>
                         </div>
+                        <input type="hidden" name="plan" id="plan" value="">
 
                         <div class="form-group">
                             <!-- <label class="form-label">Property Status</label> -->
@@ -134,6 +135,7 @@
                             <h1 class="section-title">I would like to know</h1>
                             <p class="section-subtitle">Explore past transaction reports in your area and get an estimate of your property’s selling price based on current market trends and buyer interest.</p>
                         </div>
+                        <input type="hidden" name="like_to_know" id="like_to_know" value="">
 
                         <div class="work-category">
                             <div class="form-group">
@@ -191,7 +193,7 @@
 
                         <div class="form-group">
                             <label class="form-label">Your sqft </label>
-                            <input type="text" name="sqft" class="form-input" placeholder="Enter Your sqft" maxlength="4">
+                            <input type="text" name="sqft" id="sqft" class="form-input" placeholder="Enter Your sqft" maxlength="4">
                             <p class="error-message" id="sqft-error"></p>
                         </div>
 
@@ -353,11 +355,38 @@
     <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
+        function checkFormFinished() {
+            const isFormFinished = sessionStorage.getItem('finish_form');
+            const timestamp = sessionStorage.getItem('finish_form_timestamp');
+
+            if (!isFormFinished || !timestamp) {
+                return false;
+            }
+
+            const now = new Date().getTime();
+            const elapsed = now - parseInt(timestamp);
+            const maxDuration = 5 * 6 * 1000; // 5 mins
+
+            if (elapsed > maxDuration) {
+                sessionStorage.removeItem('finish_form');
+                sessionStorage.removeItem('finish_form_timestamp');
+                return false;
+            }
+
+            if (isFinishedForm !== 'landed') {
+                return false;
+            }
+
+            return true;
+        }
+
         // Variables
-        let currentStep = 1;
         const totalSteps = 5;
-        let plan = "";
+        let currentStep = checkFormFinished() ? totalSteps : 1;
         let likeToKnow = "";
+        let street = sessionStorage.getItem('street') ?? '';
+        let plan = sessionStorage.getItem('plan') ?? '';
+        let sqft = sessionStorage.getItem('sqft') ?? '';
 
         $(document).ready(function() {
             $('.btn-next').on('click', function() {
@@ -391,11 +420,16 @@
             })
         });
 
+        $('#street-value').val(street);
+        $('#plan-value').val(plan);
+        $('#sqft-value').val(sqft);
+
         function validateStep() {
             let isValid = true
             $('.error-message').text('');
 
             if (currentStep === 1) {
+                $('input[name="plan"]').val(plan);
                 $('#plan-value').val(plan);
                 if (!plan) {
                     $('#plan-error').text('Please select an option.');
@@ -404,6 +438,7 @@
             }
 
             if (currentStep === 2) {
+                $('input[name="like_to_know"]').val(likeToKnow);
                 if (!likeToKnow) {
                     $('#like-to-know-error').text('Please select an option.');
                     isValid = false;
