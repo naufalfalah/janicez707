@@ -409,6 +409,12 @@ body {
     width: 100% !important;
 }
 
+.select2-container--default .select2-search--dropdown .select2-search__field {
+    background-color: var(--card);
+    color: var(--text-color, #fff);
+    border: none;
+}
+
 
 /* Checkboxes */
 .checkbox-grid {
@@ -648,12 +654,14 @@ body {
     background-color: #d1d8e0;
 }
 
-.btn-next {
+.btn-next,
+.btn-submit {
     background: var(--gradient);
     color: white;
 }
 
-.btn-next:hover {
+.btn-next:hover,
+.btn-submit:hover {
     opacity: 0.9;
     transform: translateY(-2px);
 }

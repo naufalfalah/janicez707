@@ -372,7 +372,7 @@
                 validateStep();
             })
 
-            fetch("../util_data.php?action=getProjects")
+            fetch("../util_data.php?action=getStreet")
                 .then(response => response.json())
                 .then(data => {
                     const streetSelect = $('select[name="street"]');
@@ -380,7 +380,7 @@
                     streetSelect.append('<option value="">Select street</option>');
                     
                     data.forEach(item => {
-                        streetSelect.append(`<option value="${item.street}">${item.street}</option>`);
+                        streetSelect.append(`<option value="${item.street_names}">${item.street_names}</option>`);
                     });
                 })
                 .catch(error => console.error("Error loading towns:", error));
