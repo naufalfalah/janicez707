@@ -371,7 +371,6 @@
 
             $('select[name="town"]').on('change', function () {
                 const town_id = $(this).find(':selected').data('id');
-                console.log('town_id', town_id)
                 if (!town_id) return;
 
                 fetch(`../util_data.php?action=getStreet&town_id=${town_id}`)
