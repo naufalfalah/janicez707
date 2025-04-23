@@ -149,7 +149,7 @@
     
                         <div class="form-group">
                             <label class="form-label">BLK </label>
-                            <input type="text" name="block" id="block" class="form-input" placeholder="Enter your block number" maxlength="4">
+                            <input type="text" name="block" id="block" class="form-input" placeholder="Enter your block number" maxlength="15">
                             <p class="error-message" id="block-error"></p>
                         </div>
     
@@ -217,7 +217,7 @@
                             <input type="checkbox" name="terms" id="terms" class="checkbox-input" checked>
                             <label for="terms" class="checkbox-label">
                                 <span class="checkbox-custom"></span>
-                                <span>I consent to the collection, use, and disclosure of my personal data for purposes as set out in our Privacy Policy. (View Policy)</span>
+                                <span>I consent to the collection, use, and disclosure of my personal data for purposes as set out in our Privacy Policy. <a href="../policy.html" class="policy-link">(View Policy)</a></span>
                             </label>
                             <p class="error-message" id="terms-error"></p>
                         </div>
@@ -347,6 +347,12 @@
             if (isFormFinished !== 'condo') {
                 return false;
             }
+
+            
+            $('.container').css({
+                'width': '850%',
+                'max-width': '100%'
+            });
 
             return true;
         }

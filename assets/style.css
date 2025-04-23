@@ -1324,3 +1324,9 @@ tbody {
     color: #4caf50;
     font-size: 12px;
 }
+
+.policy-link {
+    text-decoration: none;
+    color: white !important;
+    font-weight: 700;
+}
