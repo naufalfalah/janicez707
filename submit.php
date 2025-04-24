@@ -17,25 +17,25 @@ $stmt->execute();
 
 // Fetch result
 $result = $stmt->fetch(PDO::FETCH_ASSOC);
-// if ($result['total'] != 0) {
-//     echo json_encode([
-//         "success" => true,
-//         "message" => "Data saved successfully!",
-//         "lead_id" => $_POST['lead_id'],
-//     ]);
-//     exit();
-// }
+if ($result['total'] != 0) {
+    echo json_encode([
+        "success" => true,
+        "message" => "Data saved successfully!",
+        "lead_id" => $_POST['lead_id'],
+    ]);
+    exit();
+}
 
-// if ($result['ph_number'] == $_POST['ph_number']) {
-//     if (isset($_POST['lead_id']) && $_POST['lead_id'] != '') {
-//         echo json_encode([
-//             "success" => true,
-//             "message" => "Data saved successfully!",
-//             "lead_id" => $_POST['lead_id'],
-//         ]);
-//         exit();
-//     }
-// }
+if ($result['ph_number'] == $_POST['ph_number']) {
+    if (isset($_POST['lead_id']) && $_POST['lead_id'] != '') {
+        echo json_encode([
+            "success" => true,
+            "message" => "Data saved successfully!",
+            "lead_id" => $_POST['lead_id'],
+        ]);
+        exit();
+    }
+}
 
 $data = $_POST;
 
@@ -106,6 +106,14 @@ try {
     } elseif ($formType === 'landed') {
         header("Location: ./landed/report.php?lead_id=$leadId&unit=".urlencode($unit)."&full_address=".urlencode($fullAddress)."&street=".urlencode($street)."&plan=".urlencode($plan)."&sqft=".urlencode($sqft));
     }
+
+    $pdo->commit();
+    
+    $fetchStmt = $pdo->prepare("SELECT * FROM leads WHERE id = :id");
+    $fetchStmt->execute([':id' => $leadId]);
+    $lead = $fetchStmt->fetch(PDO::FETCH_ASSOC);
+    
+    sendLeadToDiscord($lead);
     exit();
 } catch (PDOException $e) {
     echo json_encode([

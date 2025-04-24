@@ -17,26 +17,26 @@ function sendLeadToDiscord($lead)
             "name" => $lead['firstname'],
             "mobile_number" => $lead['ph_number'],
             "email" => $lead['email'],
-            "source_url" => 'https://launchgovtest.homes/',
+            "source_url" => getenv('DISCORD_SOURCE_URL') ?? 'https://launchgovtest.homes/',
         );
 
         if ($lead['form_type'] == 'condo') {
             $additional_data = array(
                 array(
                     "key" => "Project",
-                    "value" => "Condo " . $lead['condo_project_name']
+                    "value" => "Condo " . $lead['project']
                 ),
                 array(
                     "key" => "Blk",
-                    "value" => $lead['blk']
+                    "value" => $lead['block']
                 ),
                 array(
                     "key" => "Looking to sell your property",
-                    "value" => $lead['sellCheck']
+                    "value" => $lead['sell']
                 ),
                 array(
                     "key" => "Floor - Unit number",
-                    "value" => $lead['floor_number'] ." - ". $lead['unit_number']
+                    "value" => $lead['floor'] ." - ". $lead['number']
                 )
             );
         } elseif ($lead['form_type'] == 'landed') {
@@ -47,7 +47,7 @@ function sendLeadToDiscord($lead)
                 ),
                 array(
                     "key" => "Landed Street",
-                    "value" => $lead['landed_street']
+                    "value" => $lead['street']
                 ),
                 array(
                     "key" => "SQFT",
@@ -59,7 +59,7 @@ function sendLeadToDiscord($lead)
                 ),
                 array(
                     "key" => "Plans",
-                    "value" => $lead['your_plans']
+                    "value" => $lead['plan']
                 )
             );
         } elseif ($lead['form_type'] == 'hdb') {
@@ -74,11 +74,11 @@ function sendLeadToDiscord($lead)
                 ),
                 array(
                     "key" => "Street Name",
-                    "value" => $lead['street_name']
+                    "value" => $lead['street']
                 ),
                 array(
                     "key" => "Blk",
-                    "value" => $lead['blk']
+                    "value" => $lead['block']
                 ),
                 array(
                     "key" => "HDB Flat Type",
@@ -86,11 +86,11 @@ function sendLeadToDiscord($lead)
                 ),
                 array(
                     "key" => "Looking to sell your property",
-                    "value" => $lead['sellCheck']
+                    "value" => $lead['sell']
                 ),
                 array(
                     "key" => "Floor - Unit number",
-                    "value" => $lead['floor_number'] ." - ".$lead['unit_number']
+                    "value" => $lead['floor'] ." - ".$lead['unit']
                 )
             );
         }
