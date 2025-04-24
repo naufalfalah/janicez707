@@ -29,7 +29,7 @@ if ($result['total'] != 0) {
 
 $data = $_POST;
 
-$leadFields = ["form_type", "source_url", "name", "ph_number", "email"];
+$leadFields = ["form_type", "source_url", "ip", "name", "ph_number", "email"];
 $leadData = array_intersect_key($data, array_flip($leadFields));
 
 foreach ($leadFields as $field) {
@@ -43,8 +43,8 @@ foreach ($leadFields as $field) {
 $pdo->beginTransaction();
 try {
     if (!$duplicate) {
-        $stmt = $pdo->prepare("INSERT INTO leads (form_type, source_url, firstname, ph_number, email) 
-                              VALUES (:form_type, :source_url, :name, :ph_number, :email)");
+        $stmt = $pdo->prepare("INSERT INTO leads (form_type, source_url, ip, firstname, ph_number, email) 
+                              VALUES (:form_type, :source_url, :ip, :name, :ph_number, :email)");
         $stmt->execute($leadData);
         $leadId = $pdo->lastInsertId(); // Get inserted lead ID
     
@@ -69,6 +69,13 @@ try {
         $fetchStmt = $pdo->prepare("SELECT * FROM leads WHERE id = :id");
         $fetchStmt->execute([':id' => $leadId]);
         $lead = $fetchStmt->fetch(PDO::FETCH_ASSOC);
+        
+        $detailStmt = $pdo->prepare("SELECT lead_form_key, lead_form_value FROM lead_details WHERE lead_id = :lead_id");
+        $detailStmt->execute([':lead_id' => $leadId]);
+
+        while ($row = $detailStmt->fetch(PDO::FETCH_ASSOC)) {
+            $lead[$row['lead_form_key']] = $row['lead_form_value'];
+        }
         
         sendLeadToDiscord($lead);
     }

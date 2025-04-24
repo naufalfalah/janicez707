@@ -63,6 +63,7 @@
                     <input type="hidden" name="form_type" value="hdb">
                     <input type="hidden" name="source_url" value="https://findmypropertyvalaution.homes/">
                     <input type="hidden" name="lead_id" id="lead_id" value="">
+                    <input type="hidden" name="ip" value="">
 
                     <!-- Step 1: More Details -->
                     <section class="form-section active" id="step-1">
@@ -241,6 +242,19 @@
         </div>
     </div>
 
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            fetch("https://www.cloudflare.com/cdn-cgi/trace")
+            .then(res => res.text())
+            .then(text => {
+                const ip = text.match(/ip=(.*)/)[1].trim();
+                document.querySelectorAll('input[name="ip"]').forEach(el => {
+                el.value = ip;
+                });
+            })
+            .catch(err => console.error("IP fetch error:", err));
+        });
+    </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>

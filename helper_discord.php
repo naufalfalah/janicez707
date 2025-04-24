@@ -55,7 +55,7 @@ function sendLeadToDiscord($lead)
                 ),
                 array(
                     "key" => "Like to Know",
-                    "value" => implode(" | ", $lead['like_to_know'])
+                    "value" => $lead['like_to_know']
                 ),
                 array(
                     "key" => "Plans",
