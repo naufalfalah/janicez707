@@ -1,8 +1,6 @@
 <?php
 
 require_once 'database.php';
-require_once 'helper_round_robin.php';
-require_once 'helper_2chat.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     echo json_encode([
@@ -17,26 +15,25 @@ $stmt->execute();
 
 // Fetch result
 $result = $stmt->fetch(PDO::FETCH_ASSOC);
-if ($result['total'] != 0) {
-    echo json_encode([
-        "success" => true,
-        "message" => "Data saved successfully!",
-        "lead_id" => $_POST['lead_id'],
-        "OTP" => $_POST['wp_otp']
-    ]);
-    exit();
-}
-if ($result['ph_number'] == $_POST['ph_number']) {
-    if (isset($_POST['lead_id']) && $_POST['lead_id'] != '') {
-        echo json_encode([
-            "success" => true,
-            "message" => "Data saved successfully!",
-            "lead_id" => $_POST['lead_id'],
-            "OTP" => $_POST['wp_otp']
-        ]);
-        exit();
-    }
-}
+// if ($result['total'] != 0) {
+//     echo json_encode([
+//         "success" => true,
+//         "message" => "Data saved successfully!",
+//         "lead_id" => $_POST['lead_id'],
+//     ]);
+//     exit();
+// }
+
+// if ($result['ph_number'] == $_POST['ph_number']) {
+//     if (isset($_POST['lead_id']) && $_POST['lead_id'] != '') {
+//         echo json_encode([
+//             "success" => true,
+//             "message" => "Data saved successfully!",
+//             "lead_id" => $_POST['lead_id'],
+//         ]);
+//         exit();
+//     }
+// }
 
 $data = $_POST;
 
@@ -76,35 +73,37 @@ try {
     
     $formType = $_POST['form_type'] ?? null;
 
-    $town = $_POST['town'] ?? '';
+    $project = $_POST['project'] ?? '';
     $block = $_POST['block'] ?? '';
     $floor = $_POST['floor'] ?? '';
     $unitVal = $_POST['unit'] ?? '';
+    $flatType = $_POST['flat_type'] ?? '';
+    $town = $_POST['town'] ?? '';
     $street = $_POST['street'] ?? '';
     $sqft = $_POST['sqft'] ?? '';
-    $flatType = $_POST['flat_type'] ?? '';
+    $plan = $_POST['plan'] ?? '';
 
     $fullAddress = '';
     $unit = '';
 
     if ($formType === 'condo') {
-        $fullAddress = "$town, Blk $block, Floor $floor - Unit $unitVal";
+        $fullAddress = "$project, Blk $block, Floor $floor - Unit $unitVal";
+        $unit = "Floor $floor - Unit $unitVal";
+    } elseif ($formType === 'hdb') {
+        $fullAddress = "$town, $street, Blk $block, Floor $floor - Unit $unitVal, HDB Flat Type: $flatType";
         $unit = "Floor $floor - Unit $unitVal";
     } elseif ($formType === 'landed') {
         $fullAddress = "$street, SQFT: $sqft";
         $unit = "$sqft SQFT";
-    } elseif ($formType === 'hdb') {
-        $fullAddress = "$town, $street, Blk $block, Floor $floor - Unit $unitVal, HDB Flat Type: $flatType";
-        $unit = "Floor $floor - Unit $unitVal";
     }
 
-    echo json_encode([
-        "success" => true,
-        "message" => "Data saved successfully!",
-        "full_address" => $fullAddress,
-        "unit" => $unit,
-        "lead_id" => $leadId ?? 0,
-    ]);
+    if ($formType === 'condo') {
+        header("Location: ./condo/report.php?lead_id=$leadId&unit=".urlencode($unit)."&full_address=".urlencode($fullAddress)."&project=".urlencode($project)."&block=".urlencode($block)."&unit=".urlencode($unit));
+    } elseif ($formType === 'hdb') {
+        header("Location: ./hdb/report.php?lead_id=$leadId&unit=".urlencode($unit)."&full_address=".urlencode($fullAddress)."&town=".urlencode($town)."&flat_type=".urlencode($flatType)."&block=".urlencode($block));
+    } elseif ($formType === 'landed') {
+        header("Location: ./landed/report.php?lead_id=$leadId&unit=".urlencode($unit)."&full_address=".urlencode($fullAddress)."&street=".urlencode($street)."&plan=".urlencode($plan)."&sqft=".urlencode($sqft));
+    }
     exit();
 } catch (PDOException $e) {
     echo json_encode([
