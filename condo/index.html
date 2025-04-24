@@ -248,7 +248,6 @@
         // Variables
         const totalSteps = 3;
         let currentStep = 1;
-        let sell = "";
 
         $(document).ready(function() {
             $('.btn-next').on('click', function() {
@@ -287,7 +286,7 @@
             $('.error-message').text('');
 
             if (currentStep === 1) {
-                $('#sell').val(sell)
+                const sell = $('input[name="sell"]').val();
                 if (!sell) {
                     $('#sell-error').text('Please select an option.');
                     isValid = false;
@@ -339,8 +338,7 @@
             
             // Select clicked card
             card.classList.add('selected');
-
-            sell = value;
+            $('input[name="sell"]').val(value);
         }
     </script>
     <script src="../js/form.js"></script>

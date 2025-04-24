@@ -277,7 +277,6 @@
         // Variables
         const totalSteps = 4;
         let currentStep = 1;
-        let likeToKnow = "";
 
         $(document).ready(function() {
             $('.btn-next').on('click', function() {
@@ -316,7 +315,8 @@
             $('.error-message').text('');
 
             if (currentStep === 1) {
-                $('input[name="plan"]').val(plan);
+                const plan = $('input[name="plan"]').val();
+                console.log("plan", plan)
                 if (!plan) {
                     $('#plan-error').text('Please select an option.');
                     isValid = false;
@@ -324,7 +324,7 @@
             }
 
             if (currentStep === 2) {
-                $('input[name="like_to_know"]').val(likeToKnow);
+                const likeToKnow = $('input[name="like_to_know"]').val();
                 if (!likeToKnow) {
                     $('#like-to-know-error').text('Please select an option.');
                     isValid = false;
@@ -357,11 +357,11 @@
             // Select clicked card
             card.classList.add('selected');
 
-            plan = value;
+            $('input[name="plan"]').val(value);
         }
 
         function selectCardLikeToKnow(value) {
-            likeToKnow = value;
+            $('input[name="like_to_know"]').val(value);
         }
     </script>
     <script src="../js/form.js"></script>

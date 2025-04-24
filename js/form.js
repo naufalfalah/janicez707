@@ -14,6 +14,23 @@ $(document).ready(function() {
     $('input[name="floor"], input[name="unit"], input[name="sqft"], input[name="ph_number"]').on('input', function() {
         this.value = this.value.replace(/[^0-9]/g, '');
     });
+
+    $('#submit-form').on('submit', function(event) {
+        event.preventDefault();
+        
+        // Validate form fields
+        if (!formValidation()) {
+            return;
+        }
+        
+        const formData = $(this).serialize();
+        console.log("formData", formData);
+        
+        $('#loading-indicator').show();
+        $('.btn-submit').prop('disabled', true);
+
+        this.submit();
+    });
 });
 
 function formValidation() {
