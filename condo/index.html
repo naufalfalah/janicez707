@@ -59,9 +59,9 @@
         <!-- Main Content -->
         <div class="main-content">
             <div class="container">
-                <form action="" method="POST" id="submit-form">
+                <form action="../submit.php" method="POST" id="submit-form">
                     <input type="hidden" name="form_type" value="condo">
-                    <input type="hidden" name="source_url" value="https://launchgovtest.homes/">
+                    <input type="hidden" name="source_url" value="https://findmypropertyvalaution.homes/">
                     <input type="hidden" name="lead_id" id="lead_id" value="">
 
                     <!-- Step 1: Property Details -->
@@ -234,83 +234,6 @@
                             </button>
                         </div>
                     </section>
-    
-                    <!-- Step 4: Results -->
-                    <section class="form-section" id="step-4">
-                        <div class="table-main-container">
-                            <div class="table-box">
-                                <h1>Resale Flate Price</h1>
-                                <div class="hdb-val-card">
-                                    <h1 class="hdb-val-title"><strong>FREE Home Valuation Report (worth $88)</strong></h1>
-                                    <div class="hdb-val-content">
-                                        <p>
-                                            Expect a call from us soon with a complimentary consultation for <span id="full-address-result">{Client's Property's Address}</span>. Get a clear picture of your HDB unit <span id="unit-result">{Client's Property Unit Number}</span> selling price with no obligations.
-                                        </p>
-                                        <ul>
-                                            <li>Recent rentals nearby</li>
-                                            <li>Highest transactions</li>
-                                            <li>Last 3 months report</li>
-                                            <li>Potential selling price</li>
-                                            <li>X-Value estimate</li>
-                                            <li>Nearby HDB comparison</li>
-                                        </ul>
-                                        <p>
-                                            Get market trends analysis to help you plan ahead, whether selling now or in the future.
-                                        </p>
-                                    </div>
-                                </div>
-                                
-                                <div class="table">
-                                    <p>Search Results</p>
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <input type="text" class="form-input readonly" value="HDB Project" readonly>
-                                        </div>
-                                        <div class="col-6">
-                                            <input type="text" class="form-input readonly" id="project-value" value="" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <input type="text" class="form-input readonly" value="Block Number" readonly>
-                                        </div>
-                                        <div class="col-6">
-                                            <input type="text" class="form-input readonly" id="block-value" value="" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <input type="text" class="form-input readonly" value="Unit" readonly>
-                                        </div>
-                                        <div class="col-6">
-                                            <input type="text" class="form-input readonly" id="unit-value" value="" readonly>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Filter and Results Table Section -->
-                            <div class="table-box1">
-                                <div class="table">
-                                    <table id="empTable" class="table table-striped" style="width:100%">
-                                        <tr>
-                                            <th>Date of Sales</th>
-                                            <th>Project Name</th>
-                                            <th>Street Name</th>
-                                            <th>Discrict</th>
-                                            <th>Market Segment</th>
-                                            <th>Tenure</th>
-                                            <th>Type of Sale</th>
-                                            <th>Floor Level</th>
-                                            <th>Area (Sqft)</th>
-                                            <th>Sale Price (S$)</th>
-                                        </tr>
-                                    </table>
-                                    <tbody></tbody>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
                 </form>
             </div>
         </div>
@@ -320,50 +243,11 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.3/js/standalone/selectize.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
-        function checkFormFinished() {
-            const isFormFinished = sessionStorage.getItem('finish_form');
-            const timestamp = sessionStorage.getItem('finish_form_timestamp');
-            console.log('isFormFinished', isFormFinished);
-            console.log('timestamp', timestamp);
-
-            if (!isFormFinished || !timestamp) {
-                return false;
-            }
-
-            const now = new Date().getTime();
-            const elapsed = now - parseInt(timestamp);
-            const maxDuration = 5 * 6 * 1000; // 5 mins
-
-            if (elapsed > maxDuration) {
-                sessionStorage.removeItem('finish_form');
-                sessionStorage.removeItem('finish_form_timestamp');
-                return false;
-            }
-
-            if (isFormFinished !== 'condo') {
-                return false;
-            }
-
-            
-            $('.container').css({
-                'width': '850%',
-                'max-width': '100%'
-            });
-
-            return true;
-        }
-
         // Variables
-        const totalSteps = 4;
-        let currentStep = checkFormFinished() ? totalSteps : 1;
-        let sell = "";
-        let project = sessionStorage.getItem('project') ?? '';
-        let block = sessionStorage.getItem('block') ?? '';
-        let unit = sessionStorage.getItem('unit') ?? '';
+        const totalSteps = 3;
+        let currentStep = 1;
 
         $(document).ready(function() {
             $('.btn-next').on('click', function() {
@@ -397,16 +281,12 @@
             allowClear: true,
         });
 
-        $('#project-value').val(project);
-        $('#block-value').val(block);
-        $('#unit-value').val(unit);
-
         function validateStep() {
             let isValid = true
             $('.error-message').text('');
 
             if (currentStep === 1) {
-                $('#sell').val(sell)
+                const sell = $('input[name="sell"]').val();
                 if (!sell) {
                     $('#sell-error').text('Please select an option.');
                     isValid = false;
@@ -415,14 +295,12 @@
 
             if (currentStep === 2) {
                 const project = $('select[name="project"]').val();
-                $('#project-value').val(project);
                 if (!project) {
                     $('#project-error').text('Please select project');
                     isValid = false;
                 }
                 
                 const block = $('input[name="block"]').val();
-                $('#block-value').val(block);
                 if (!block) {
                     $('#block-error').text('Please enter block');
                     isValid = false;
@@ -439,7 +317,6 @@
                 }
                 
                 const unit = $('input[name="unit"]').val();
-                $('#unit-value').val(unit);
                 if (!unit) {
                     $('#unit-error').text('Please enter unit');
                     isValid = false;
@@ -461,54 +338,9 @@
             
             // Select clicked card
             card.classList.add('selected');
-
-            sell = value;
+            $('input[name="sell"]').val(value);
         }
     </script>
     <script src="../js/form.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('.dataTables_filter label input').attr('placeholder', ' ⌕ search here');
-            $('.basic').select2();
-
-            // Initial table load
-            load_data({});
-            
-            $('#search-field').on('keyup', function () {
-                reloadTable();
-            });
-
-            function reloadTable() {
-                $('#empTable').DataTable().destroy();
-                load_data({
-                    search: $('#search-field').val(),
-                });
-            }
-
-            function load_data(params = {}) {
-                $('#empTable').DataTable({
-                    processing: true,
-                    serverSide: true,
-                    ajax: {
-                        url: '../util_project_data.php',
-                        data: params
-                    },
-                    columns: [
-                        { data: 'contractDate' },
-                        { data: 'project' },
-                        { data: 'street' },
-                        { data: 'district' },
-                        { data: 'marketSegment' },
-                        { data: 'tenure' },
-                        { data: 'typeOfSale' },
-                        { data: 'floorRange' },
-                        { data: 'area' },
-                        { data: 'price' }
-                    ],
-                    order: [[0, "desc"]]
-                });
-            }
-        });
-    </script>
 </body>
 </html>

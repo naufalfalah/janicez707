@@ -16,9 +16,8 @@ $(document).ready(function() {
     });
 
     $('#submit-form').on('submit', function(event) {
-        // console.log("submit");
         event.preventDefault();
-
+        
         // Validate form fields
         if (!formValidation()) {
             return;
@@ -30,61 +29,7 @@ $(document).ready(function() {
         $('#loading-indicator').show();
         $('.btn-submit').prop('disabled', true);
 
-        $.ajax({
-            url: '../submit.php',
-            type: 'POST',
-            data: formData,
-            dataType: 'json',
-            success: function(response) {
-                console.log('Success Response:', response);
-
-                $('#loading-indicator').hide();
-                $('.btn-submit').prop('disabled', false);
-                $('.container').css({
-                    'width': '850%',
-                    'max-width': '100%'
-                });
-
-                $('#full-address-result').text(response?.full_address ?? '');
-                $('#unit-result').text(response?.unit ?? '');
-
-                const formType = $('input[name="form_type"]').val();
-                if (formType === 'hdb') {
-                    $('#submit-form').trigger('form:submitted', [response]);
-                }
-
-                const project = $('#project').val() ?? "";
-                const block = $('#block').val() ?? "";
-                const unit = $('#unit').val() ?? "";
-                const town = $('#town').val() ?? "";
-                const flat_type = $('#flat_type').val() ?? "";
-                const street = $('#street').val() ?? "";
-                const plan = $('#plan').val() ?? "";
-                const sqft = $('#sqft').val() ?? "";
-
-                const timestamp = new Date().getTime();
-                sessionStorage.setItem('finish_form', formType);
-                sessionStorage.setItem('finish_form_timestamp', timestamp.toString());
-                sessionStorage.setItem('project', project);
-                sessionStorage.setItem('block', block);
-                sessionStorage.setItem('unit', unit);
-                sessionStorage.setItem('town', town);
-                sessionStorage.setItem('flat_type', flat_type);
-                sessionStorage.setItem('street', street);
-                sessionStorage.setItem('plan', plan);
-                sessionStorage.setItem('sqft', sqft);
-
-                nextStep();
-            },
-            error: function(xhr, status, error) {
-                console.error('AJAX Error:', status, error);
-
-                $('#loading-indicator').hide();
-                $('.btn-submit').prop('disabled', false);
-                
-                alert('Something went wrong. Please try again.');
-            }
-        });
+        this.submit();
     });
 });
 
